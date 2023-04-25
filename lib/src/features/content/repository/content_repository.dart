@@ -1,3 +1,3 @@
 abstract class ContentRepository {
-  // TODO: add your impl here
+  Future<List<String>?> loadYoutubePost();
 }

@@ -1,3 +1,4 @@
+import 'package:beaverbasketball/src/core/common/constant/enum.dart';
 import 'package:beaverbasketball/src/features/content/view/content_view.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -10,7 +11,7 @@ class RouteApp {
         name: "home",
         builder: (BuildContext context, GoRouterState state) {
           return ContentView(
-            label: "home",
+            filter: NavbarFilter.home,
           );
         },
         routes: <RouteBase>[
@@ -19,7 +20,7 @@ class RouteApp {
             name: 'about',
             builder: (BuildContext context, GoRouterState state) {
               return ContentView(
-                label: "about",
+                filter: NavbarFilter.about,
               );
             },
           ),
@@ -28,16 +29,52 @@ class RouteApp {
             name: 'gallery',
             builder: (BuildContext context, GoRouterState state) {
               return ContentView(
-                label: "gallery",
+                filter: NavbarFilter.gallery,
               );
             },
           ),
           GoRoute(
-            path: 'login',
-            name: 'login',
+            path: 'schedule',
+            name: 'schedule',
             builder: (BuildContext context, GoRouterState state) {
               return ContentView(
-                label: "login",
+                filter: NavbarFilter.schedule,
+              );
+            },
+          ),
+          GoRoute(
+            path: 'registration',
+            name: 'registration',
+            builder: (BuildContext context, GoRouterState state) {
+              return ContentView(
+                filter: NavbarFilter.registration,
+              );
+            },
+          ),
+          GoRoute(
+            path: 'achievement',
+            name: 'achievement',
+            builder: (BuildContext context, GoRouterState state) {
+              return ContentView(
+                filter: NavbarFilter.achievement,
+              );
+            },
+          ),
+          GoRoute(
+            path: 'store',
+            name: 'store',
+            builder: (BuildContext context, GoRouterState state) {
+              return ContentView(
+                filter: NavbarFilter.store,
+              );
+            },
+          ),
+          GoRoute(
+            path: 'news',
+            name: 'news',
+            builder: (BuildContext context, GoRouterState state) {
+              return ContentView(
+                filter: NavbarFilter.news,
               );
             },
           ),

@@ -1,76 +1,173 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
+import 'package:beaverbasketball/src/core/common/constant/enum.dart';
+import 'package:beaverbasketball/src/features/content/widget/content_body.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:beaverbasketball/src/core/common/constant/asset.dart';
 
-class ContentView extends ConsumerWidget {
-  final String label;
-  const ContentView({required this.label, super.key});
+class ContentView extends HookConsumerWidget {
+  final NavbarFilter filter;
+  const ContentView({required this.filter, super.key});
 
   static const routeName = '/content';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isActionEnabled = MediaQuery.of(context).size.width > 800;
+    final scaffoldKey = useMemoized(() => GlobalKey<ScaffoldState>());
     return Container(
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Color.fromARGB(255, 143, 23, 17), Colors.black87],
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-        ),
+        color: Colors.white,
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          toolbarHeight: 90,
-          title: Row(
+        endDrawer: Drawer(
+          backgroundColor: Color(0xffEA5455),
+          child: ListView(
             children: [
+              NavigationItem(
+                isActive: filter == NavbarFilter.home,
+                label: "Home",
+              ),
               SizedBox(
                 width: 20,
               ),
-              InkWell(
-                onTap: () {},
-                child: Image.asset(AssetConstant.iconTextOnly, height: 40),
+              NavigationItem(
+                isActive: filter == NavbarFilter.about,
+                label: "About",
+              ),
+              SizedBox(
+                width: 20,
+              ),
+              NavigationItem(
+                isActive: filter == NavbarFilter.gallery,
+                label: "Gallery",
+              ),
+              SizedBox(
+                width: 20,
+              ),
+              NavigationItem(
+                isActive: filter == NavbarFilter.schedule,
+                label: "Schedule",
+              ),
+              SizedBox(
+                width: 20,
+              ),
+              NavigationItem(
+                isActive: filter == NavbarFilter.achievement,
+                label: "Achievement",
+              ),
+              SizedBox(
+                width: 20,
+              ),
+              NavigationItem(
+                isActive: filter == NavbarFilter.store,
+                label: "Store",
+              ),
+              SizedBox(
+                width: 20,
+              ),
+              NavigationItem(
+                isActive: filter == NavbarFilter.news,
+                label: "News",
+              ),
+              SizedBox(
+                width: 20,
+              ),
+              NavigationItem(
+                isActive: filter == NavbarFilter.registration,
+                label: "Registration",
+              ),
+              SizedBox(
+                width: 40,
               ),
             ],
           ),
-          backgroundColor: Colors.transparent,
-          actions: [
-            NavigationItem(
-              isActive: label == "home",
-              label: "Home",
-            ),
-            SizedBox(
-              width: 20,
-            ),
-            NavigationItem(
-              isActive: label == "about",
-              label: "About",
-            ),
-            SizedBox(
-              width: 20,
-            ),
-            NavigationItem(
-              isActive: label == "gallery",
-              label: "Gallery",
-            ),
-            SizedBox(
-              width: 20,
-            ),
-            NavigationItem(
-              isActive: label == "login",
-              label: "Login",
-            ),
-            SizedBox(
-              width: 40,
-            ),
-          ],
+        ),
+        key: scaffoldKey,
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          toolbarHeight: 90,
+          title: InkWell(
+            onTap: () {
+              context.replaceNamed("home");
+            },
+            child: Image.asset(AssetConstant.iconTextOnly, height: 40),
+          ),
+          backgroundColor: Color(0xffEA5455),
+          actions: isActionEnabled
+              ? [
+                  NavigationItem(
+                    isActive: filter == NavbarFilter.home,
+                    label: "Home",
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  NavigationItem(
+                    isActive: filter == NavbarFilter.about,
+                    label: "About",
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  NavigationItem(
+                    isActive: filter == NavbarFilter.gallery,
+                    label: "Gallery",
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  NavigationItem(
+                    isActive: filter == NavbarFilter.schedule,
+                    label: "Schedule",
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  NavigationItem(
+                    isActive: filter == NavbarFilter.achievement,
+                    label: "Achievement",
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  NavigationItem(
+                    isActive: filter == NavbarFilter.store,
+                    label: "Store",
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  NavigationItem(
+                    isActive: filter == NavbarFilter.news,
+                    label: "News",
+                  ),
+                  NavigationItem(
+                    isActive: filter == NavbarFilter.registration,
+                    label: "Registration",
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  SizedBox(
+                    width: 40,
+                  ),
+                ]
+              : [
+                  IconButton(
+                      onPressed: () {
+                        scaffoldKey.currentState?.openEndDrawer();
+                      },
+                      icon: Icon(Icons.menu)),
+                ],
           shadowColor: Colors.transparent,
         ),
+        body: ContentBody(filter: filter),
       ),
     );
   }
@@ -109,7 +206,7 @@ class NavigationItem extends StatelessWidget {
                 child: Container(
                   width: 28,
                   height: 2,
-                  color: Color.fromARGB(184, 226, 22, 63),
+                  color: Colors.white,
                 ),
               ),
           ],
