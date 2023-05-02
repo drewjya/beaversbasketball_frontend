@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:beaverbasketball/src/features/content/view/about/about_content.dart';
+import 'package:beaverbasketball/src/features/content/view/coach/coach_view.dart';
 import 'package:beaverbasketball/src/features/content/view/home/home_content.dart';
 import 'package:flutter/material.dart';
 
@@ -19,10 +20,9 @@ class ContentBody extends StatelessWidget {
         return HomeContent();
       case NavbarFilter.about:
         return AboutContent();
-      case NavbarFilter.gallery:
-        return Center(
-          child: Text(filter.value),
-        );
+
+      case NavbarFilter.coach:
+        return CoachView();
       default:
         return Center(
           child: Text(filter.value),

@@ -1,5 +1,6 @@
 enum NavbarFilter {
   home(value: "home"),
+  coach(value: "coach"),
   about(value: "about"),
   gallery(value: "gallery"),
   schedule(value: "schedule"),

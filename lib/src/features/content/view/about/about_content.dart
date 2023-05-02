@@ -41,21 +41,8 @@ class AboutContent extends HookConsumerWidget {
       return null;
     }, [""]);
 
-    final listCoach = [
-      "Coach Andi",
-      "Coach Intan",
-      "Coach Doddy",
-      "Coach Ary Chandra",
-      "Coach Aklili",
-      "Coach Tika",
-      "Coach Lidya",
-      "Coach Randy",
-      "Coach Vandy",
-      "Coach Fernando",
-      "Coach Hendra",
-    ];
     final isActionEnabled = MediaQuery.of(context).size.width > 800;
-    log(isActionEnabled.toString());
+
     return CustomScrollView(
       controller: controller,
       slivers: [
@@ -63,7 +50,7 @@ class AboutContent extends HookConsumerWidget {
           header: Container(
             height: 40,
             decoration: BoxDecoration(
-              color: Color(0xffEA5455),
+              color: Theme.of(context).primaryColor,
               borderRadius: BorderRadius.circular(10),
             ),
             margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
@@ -74,10 +61,9 @@ class AboutContent extends HookConsumerWidget {
                 TextSpan(
                     text: "/",
                     style: TextStyle(
-                      color: Colors.white,
                       fontSize: 20,
                     ),
-                    children: ["history", "contact", "coach", "organisasi"]
+                    children: ["history", "organisasi"]
                         .take(ref.watch(currentIndexAboutProvider) + 1)
                         .mapIndexed(
                           (e, i, first, last) => TextSpan(
@@ -127,114 +113,6 @@ class AboutContent extends HookConsumerWidget {
                     ),
                   ),
                 ),
-                SubtitleWidget(label: "Contact"),
-                MeasureSize(
-                  onChange: (size) {
-                    ref
-                        .read(aboutPotitionProvider.notifier)
-                        .addValue(MapEntry("contact", size.height));
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0)
-                        .copyWith(top: 8),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        InkWell(
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 40,
-                                child: Image.asset(
-                                  AssetConstant.iconIg,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 8,
-                              ),
-                              Text("beaversbasketball"),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Row(
-                          children: [
-                            Container(
-                              width: 40,
-                              child: Image.asset(AssetConstant.iconWa),
-                            ),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            Text("081296834488"),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Row(
-                          children: [
-                            Container(
-                              width: 40,
-                              color: Colors.white,
-                              child: Image.asset(AssetConstant.iconEmail),
-                            ),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            Text("beaverbasketballid@gmail.com"),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                MeasureSize(
-                  onChange: (size) {
-                    ref
-                        .read(aboutPotitionProvider.notifier)
-                        .addValue(MapEntry("contact", size.height));
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Divider(
-                      thickness: 2,
-                    ),
-                  ),
-                ),
-                SubtitleWidget(label: "Coach"),
-                ...listCoach.mapIndexed(
-                  (index, e, start, end) => MeasureSize(
-                    onChange: (size) {
-                      ref
-                          .read(aboutPotitionProvider.notifier)
-                          .addValue(MapEntry("coach", size.height));
-                    },
-                    child: Padding(
-                      padding: start
-                          ? const EdgeInsets.only(top: 8.0)
-                          : EdgeInsets.zero,
-                      child: ListTile(
-                        title: Text(e),
-                      ),
-                    ),
-                  ),
-                ),
-                MeasureSize(
-                  onChange: (size) {
-                    ref
-                        .read(aboutPotitionProvider.notifier)
-                        .addValue(MapEntry("coach", size.height));
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Divider(
-                      thickness: 2,
-                    ),
-                  ),
-                ),
                 SubtitleWidget(label: "Organisasi"),
                 MeasureSize(
                   onChange: (size) {
@@ -271,7 +149,7 @@ class AboutContent extends HookConsumerWidget {
                   ),
                 ),
                 Container(
-                  color: Color(0xffEA5455),
+                  color: Theme.of(context).primaryColor,
                   padding: EdgeInsets.symmetric(vertical: 40, horizontal: 10),
                   child: DefaultTextStyle(
                     style: TextStyle(
@@ -407,7 +285,14 @@ class AboutContent extends HookConsumerWidget {
             height: 15,
           ),
           Text("Raffles College - Kebon Jeruk"),
-          Text("Jalan Arjuna Utara no. 35 Jakarta Barat"),
+          Text("Jalan Arjuna Utara no. 35 Jakarta Barat."),
+          Text("Sekolah Victory Plus Bekasi,"),
+          SizedBox(
+            height: 12,
+          ),
+          Text("Perumahan Kemang Pratama,"),
+          Text("Jalan Citra Niaga Raya Bloc AO1-14,"),
+          Text("Bojong Rawalumbu Kota Bekasi."),
         ],
       ),
     ];

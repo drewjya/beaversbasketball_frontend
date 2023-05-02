@@ -25,6 +25,15 @@ class RouteApp {
             },
           ),
           GoRoute(
+            path: 'coach',
+            name: 'coach',
+            builder: (BuildContext context, GoRouterState state) {
+              return ContentView(
+                filter: NavbarFilter.coach,
+              );
+            },
+          ),
+          GoRoute(
             path: 'gallery',
             name: 'gallery',
             builder: (BuildContext context, GoRouterState state) {

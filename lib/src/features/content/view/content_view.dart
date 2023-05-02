@@ -21,69 +21,94 @@ class ContentView extends HookConsumerWidget {
     final scaffoldKey = useMemoized(() => GlobalKey<ScaffoldState>());
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Colors.black,
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         endDrawer: Drawer(
-          backgroundColor: Color(0xffEA5455),
-          child: ListView(
-            children: [
-              NavigationItem(
-                isActive: filter == NavbarFilter.home,
-                label: "Home",
-              ),
-              SizedBox(
-                width: 20,
-              ),
-              NavigationItem(
-                isActive: filter == NavbarFilter.about,
-                label: "About",
-              ),
-              SizedBox(
-                width: 20,
-              ),
-              NavigationItem(
-                isActive: filter == NavbarFilter.gallery,
-                label: "Gallery",
-              ),
-              SizedBox(
-                width: 20,
-              ),
-              NavigationItem(
-                isActive: filter == NavbarFilter.schedule,
-                label: "Schedule",
-              ),
-              SizedBox(
-                width: 20,
-              ),
-              NavigationItem(
-                isActive: filter == NavbarFilter.achievement,
-                label: "Achievement",
-              ),
-              SizedBox(
-                width: 20,
-              ),
-              NavigationItem(
-                isActive: filter == NavbarFilter.store,
-                label: "Store",
-              ),
-              SizedBox(
-                width: 20,
-              ),
-              NavigationItem(
-                isActive: filter == NavbarFilter.news,
-                label: "News",
-              ),
-              SizedBox(
-                width: 20,
-              ),
-              NavigationItem(
-                isActive: filter == NavbarFilter.registration,
-                label: "Registration",
-              ),
-              SizedBox(
-                width: 40,
+          backgroundColor: Color(0xffEB1328),
+          child: CustomScrollView(
+            slivers: [
+              SliverFillRemaining(
+                hasScrollBody: false,
+                child: Column(
+                  children: [
+                    NavigationItem(
+                      isActive: filter == NavbarFilter.home,
+                      label: "Home",
+                      labelWidget: Text(
+                        "BEAVERS BASKETBALL CLUB",
+                        style: TextStyle(
+                          fontFamily: "Demonized",
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    NavigationItem(
+                      isActive: filter == NavbarFilter.coach,
+                      label: "Coach",
+                    ),
+                    NavigationItem(
+                      isActive: filter == NavbarFilter.about,
+                      label: "About",
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    NavigationItem(
+                      isActive: filter == NavbarFilter.gallery,
+                      label: "Gallery",
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    NavigationItem(
+                      isActive: filter == NavbarFilter.schedule,
+                      label: "Schedule",
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    NavigationItem(
+                      isActive: filter == NavbarFilter.achievement,
+                      label: "Achievement",
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    NavigationItem(
+                      isActive: filter == NavbarFilter.store,
+                      label: "Store",
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    NavigationItem(
+                      isActive: filter == NavbarFilter.news,
+                      label: "News",
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    NavigationItem(
+                      isActive: filter == NavbarFilter.registration,
+                      label: "Registration",
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Spacer(),
+                    Text("Stay Together And Be Brave"),
+                    SizedBox(
+                      height: 20,
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -96,14 +121,21 @@ class ContentView extends HookConsumerWidget {
             onTap: () {
               context.replaceNamed("home");
             },
-            child: Image.asset(AssetConstant.iconTextOnly, height: 40),
+            child: Image.asset(AssetConstant.iconBorderBlack, height: 50),
           ),
-          backgroundColor: Color(0xffEA5455),
+          backgroundColor: Color(0xffEB1328),
           actions: isActionEnabled
               ? [
                   NavigationItem(
                     isActive: filter == NavbarFilter.home,
                     label: "Home",
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  NavigationItem(
+                    isActive: filter == NavbarFilter.coach,
+                    label: "Coach",
                   ),
                   SizedBox(
                     width: 20,
@@ -176,8 +208,10 @@ class ContentView extends HookConsumerWidget {
 class NavigationItem extends StatelessWidget {
   final String label;
   final bool isActive;
+  final Widget? labelWidget;
   const NavigationItem({
     Key? key,
+    this.labelWidget,
     required this.label,
     required this.isActive,
   }) : super(key: key);
@@ -196,9 +230,10 @@ class NavigationItem extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(
-                label,
-              ),
+              child: labelWidget ??
+                  Text(
+                    label,
+                  ),
             ),
             if (isActive)
               Positioned(

@@ -20,14 +20,17 @@ class BeaversApp extends ConsumerWidget {
       routerConfig: RouteApp.route,
       theme: ThemeData(
         primarySwatch: Colors.red,
+        colorScheme: Theme.of(context).colorScheme.copyWith(
+              background: Colors.black,
+            ),
         textTheme: TextTheme(
           bodyLarge: TextStyle(),
           bodyMedium: TextStyle(),
         ).apply(
-          bodyColor: Colors.black,
-          displayColor: Colors.black,
+          bodyColor: Colors.white,
+          displayColor: Colors.white,
         ),
-        primaryColor: Colors.red,
+        primaryColor: Color(0xffEB1328),
       ),
     );
   }

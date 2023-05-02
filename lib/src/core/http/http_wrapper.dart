@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:http/http.dart' as http;
 
@@ -9,13 +10,16 @@ class HttpWrapper {
       required T Function(Map<String, dynamic>) fromJson}) async {
     try {
       final res = await http.get(Uri.parse(url), headers: headers);
+
       if (res.statusCode >= 300) {
         throw res.body;
       }
+
       final data = jsonDecode(res.body);
 
       return fromJson(data);
     } catch (e) {
+      log(e.toString());
       return null;
     }
   }

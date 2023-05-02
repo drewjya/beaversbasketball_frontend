@@ -38,12 +38,12 @@ final currentIndexAboutProvider =
 );
 
 typedef _$CurrentIndexAbout = AutoDisposeNotifier<int>;
-String _$youtubeDataHash() => r'7d4eb23614cbd180467b169260c034715edfba7e';
+String _$youtubeDataHash() => r'964c957625f1966ff968f690984f5b1c35f656b3';
 
 /// See also [YoutubeData].
 @ProviderFor(YoutubeData)
 final youtubeDataProvider =
-    AsyncNotifierProvider<YoutubeData, List<String>?>.internal(
+    AsyncNotifierProvider<YoutubeData, List<YoutubeModel>>.internal(
   YoutubeData.new,
   name: r'youtubeDataProvider',
   debugGetCreateSourceHash:
@@ -52,5 +52,5 @@ final youtubeDataProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$YoutubeData = AsyncNotifier<List<String>?>;
+typedef _$YoutubeData = AsyncNotifier<List<YoutubeModel>>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
