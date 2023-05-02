@@ -46,12 +46,13 @@ class ContentView extends HookConsumerWidget {
                     SizedBox(
                       width: 20,
                     ),
-                    SizedBox(
-                      width: 20,
-                    ),
+                    
                     NavigationItem(
                       isActive: filter == NavbarFilter.coach,
                       label: "Coach",
+                    ),
+                    SizedBox(
+                      width: 20,
                     ),
                     NavigationItem(
                       isActive: filter == NavbarFilter.about,
@@ -169,22 +170,15 @@ class ContentView extends HookConsumerWidget {
                     width: 20,
                   ),
                   NavigationItem(
-                    isActive: filter == NavbarFilter.store,
-                    label: "Store",
+                    isActive: filter == NavbarFilter.news,
+                    label: "News",
                   ),
                   SizedBox(
                     width: 20,
-                  ),
-                  NavigationItem(
-                    isActive: filter == NavbarFilter.news,
-                    label: "News",
                   ),
                   NavigationItem(
                     isActive: filter == NavbarFilter.registration,
                     label: "Registration",
-                  ),
-                  SizedBox(
-                    width: 20,
                   ),
                   SizedBox(
                     width: 40,

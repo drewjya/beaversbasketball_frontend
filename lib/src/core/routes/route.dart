@@ -70,15 +70,6 @@ class RouteApp {
             },
           ),
           GoRoute(
-            path: 'store',
-            name: 'store',
-            builder: (BuildContext context, GoRouterState state) {
-              return ContentView(
-                filter: NavbarFilter.store,
-              );
-            },
-          ),
-          GoRoute(
             path: 'news',
             name: 'news',
             builder: (BuildContext context, GoRouterState state) {

@@ -20,7 +20,7 @@ class CoachView extends StatelessWidget {
       "Coach Fernando",
       "Coach Hendra",
     ];
-    return Column(
+    return ListView(
       children: [
         SubtitleWidget(label: "Coach"),
         ...listCoach.mapIndexed(
@@ -42,6 +42,7 @@ class CoachView extends StatelessWidget {
             thickness: 2,
           ),
         ),
+        FooterWidget()
       ],
     );
   }

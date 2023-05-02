@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
-import 'dart:developer';
+import 'dart:math';
 
 import 'package:beaverbasketball/src/core/common/constant/asset.dart';
 import 'package:beaverbasketball/src/core/common/widget/measure_size.dart';
@@ -21,11 +21,11 @@ scrollLoggerListener(ScrollController controller, WidgetRef ref) {
     for (var i = 0; i < data.length; i++) {
       if (total <= (controller.position.pixels + 80)) {
         total += data[i].value;
-        log(data[i].key);
+
         lastIndex = i;
       }
     }
-    log(lastIndex.toString());
+
     ref.read(currentIndexAboutProvider.notifier).changeindex(lastIndex);
   }
 }
@@ -148,27 +148,7 @@ class AboutContent extends HookConsumerWidget {
                     ),
                   ),
                 ),
-                Container(
-                  color: Theme.of(context).primaryColor,
-                  padding: EdgeInsets.symmetric(vertical: 40, horizontal: 10),
-                  child: DefaultTextStyle(
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                    child: (isActionEnabled)
-                        ? Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: _buildListData()),
-                            ],
-                          )
-                        : Column(
-                            children: _buildListData(),
-                          ),
-                  ),
-                ),
+                FooterWidget(),
               ],
             ),
           ),
@@ -176,125 +156,381 @@ class AboutContent extends HookConsumerWidget {
       ],
     );
   }
+}
 
-  List<Widget> _buildListData() {
+class FooterWidget extends StatelessWidget {
+  const FooterWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isActionEnabled = MediaQuery.of(context).size.width > 800;
+    return Container(
+      color: Theme.of(context).primaryColor,
+      padding: EdgeInsets.symmetric(vertical: 40, horizontal: 10),
+      child: DefaultTextStyle(
+        style: TextStyle(
+          color: Colors.white,
+        ),
+        child: (isActionEnabled)
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: buildFooterChild(isActionEnabled)),
+                  if (isActionEnabled)
+                    Container(
+                      width: double.infinity,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 40,
+                          ),
+                          Text("Alamat"),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text("Raffles College - Kebon Jeruk"),
+                          Text("Jalan Arjuna Utara no. 35 Jakarta Barat."),
+                          Text("Sekolah Victory Plus Bekasi,"),
+                          SizedBox(
+                            height: 12,
+                          ),
+                          Text("Perumahan Kemang Pratama,"),
+                          Text("Jalan Citra Niaga Raya Bloc AO1-14,"),
+                          Text("Bojong Rawalumbu Kota Bekasi."),
+                        ],
+                      ),
+                    ),
+                ],
+              )
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: buildFooterChild(isActionEnabled),
+              ),
+      ),
+    );
+  }
+
+  buildFooterChild(bool isActionEnabled) {
+    int loadNum() => Random().nextInt(255);
     return [
       SizedBox(
-        width: 10,
+        width: isActionEnabled ? 10 : 0,
+        height: !isActionEnabled ? 10 : 0,
       ),
-      Text("Supported By"),
+      if (!isActionEnabled) ...[
+        Text("Supported By"),
+        SizedBox(
+          height: 10,
+        ),
+        Row(
+          children: List.generate(
+              5,
+              (index) => Container(
+                    height: 45,
+                    width: 45,
+                    margin: EdgeInsets.only(right: 10),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Color.fromRGBO(loadNum(), loadNum(), loadNum(), 1),
+                    ),
+                  )),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Text("Partnership With"),
+        SizedBox(
+          height: 10,
+        ),
+        Container(
+          height: 35,
+          color: Colors.white,
+          child: Image.asset(AssetConstant.iconBPJS),
+        ),
+      ] else ...[
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("Supported By"),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: List.generate(
+                  5,
+                  (index) => Container(
+                        height: 45,
+                        width: 45,
+                        margin: EdgeInsets.only(right: 10),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color.fromRGBO(
+                              loadNum(), loadNum(), loadNum(), 1),
+                        ),
+                      )),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Text("Partnership With"),
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              height: 35,
+              color: Colors.white,
+              child: Image.asset(AssetConstant.iconBPJS),
+            ),
+          ],
+        )
+      ],
       SizedBox(
-        width: 20,
+        width: isActionEnabled ? 20 : 0,
+        height: !isActionEnabled ? 40 : 0,
       ),
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          InkWell(
-            child: Row(
+      if (!isActionEnabled) ...[
+        Text("Contact Us"),
+        SizedBox(
+          width: isActionEnabled ? 20 : 0,
+          height: !isActionEnabled ? 20 : 0,
+        ),
+      ],
+      if (isActionEnabled) ...[
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("Contact Us"),
+            SizedBox(
+              height: 15,
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    InkWell(
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 40,
+                            child: Image.asset(
+                              AssetConstant.iconIg,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 8,
+                          ),
+                          Text("beaversbasketball"),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          width: 40,
+                          child: Image.asset(AssetConstant.iconWa),
+                        ),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Text("081296834488"),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          width: 42,
+                          height: 28,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                          ),
+                          child: Image.asset(
+                            AssetConstant.iconEmail,
+                            fit: BoxFit.fitWidth,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Text("beaverbasketballid@gmail.com"),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  width: 20,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    InkWell(
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 40,
+                            child: Image.asset(
+                              AssetConstant.iconTokopedia,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 8,
+                          ),
+                          Text("beaversofficialstore"),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          width: 40,
+                          child: Image.asset(AssetConstant.iconYoutube),
+                        ),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Text("Beavers Brave Official"),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
+      ] else ...[
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            InkWell(
+              child: Row(
+                children: [
+                  Container(
+                    width: 40,
+                    child: Image.asset(
+                      AssetConstant.iconIg,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Text("beaversbasketball"),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Row(
               children: [
                 Container(
                   width: 40,
+                  child: Image.asset(AssetConstant.iconWa),
+                ),
+                SizedBox(
+                  width: 8,
+                ),
+                Text("081296834488"),
+              ],
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Row(
+              children: [
+                Container(
+                  width: 42,
+                  height: 28,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                  ),
                   child: Image.asset(
-                    AssetConstant.iconIg,
+                    AssetConstant.iconEmail,
+                    fit: BoxFit.fitWidth,
                   ),
                 ),
                 SizedBox(
                   width: 8,
                 ),
-                Text("beaversbasketball"),
+                Text("beaverbasketballid@gmail.com"),
               ],
             ),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Row(
-            children: [
-              Container(
-                width: 40,
-                child: Image.asset(AssetConstant.iconWa),
+          ],
+        ),
+        SizedBox(
+          width: isActionEnabled ? 20 : 0,
+          height: !isActionEnabled ? 20 : 0,
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            InkWell(
+              child: Row(
+                children: [
+                  Container(
+                    width: 40,
+                    child: Image.asset(
+                      AssetConstant.iconTokopedia,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Text("beaversofficialstore"),
+                ],
               ),
-              SizedBox(
-                width: 8,
-              ),
-              Text("081296834488"),
-            ],
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Row(
-            children: [
-              Container(
-                width: 42,
-                height: 28,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                ),
-                child: Image.asset(
-                  AssetConstant.iconEmail,
-                  fit: BoxFit.fitWidth,
-                ),
-              ),
-              SizedBox(
-                width: 8,
-              ),
-              Text("beaverbasketballid@gmail.com"),
-            ],
-          ),
-        ],
-      ),
-      SizedBox(
-        width: 20,
-      ),
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          InkWell(
-            child: Row(
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Row(
               children: [
                 Container(
                   width: 40,
-                  child: Image.asset(
-                    AssetConstant.iconTokopedia,
-                  ),
+                  child: Image.asset(AssetConstant.iconYoutube),
                 ),
                 SizedBox(
                   width: 8,
                 ),
-                Text("beaversofficialstore"),
+                Text("Beavers Brave Official"),
               ],
             ),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Row(
-            children: [
-              Container(
-                width: 40,
-                child: Image.asset(AssetConstant.iconYoutube),
-              ),
-              SizedBox(
-                width: 8,
-              ),
-              Text("Beavers Brave Official"),
-            ],
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Text("Raffles College - Kebon Jeruk"),
-          Text("Jalan Arjuna Utara no. 35 Jakarta Barat."),
-          Text("Sekolah Victory Plus Bekasi,"),
-          SizedBox(
-            height: 12,
-          ),
-          Text("Perumahan Kemang Pratama,"),
-          Text("Jalan Citra Niaga Raya Bloc AO1-14,"),
-          Text("Bojong Rawalumbu Kota Bekasi."),
-        ],
-      ),
+            SizedBox(
+              height: 15,
+            ),
+            Text("Alamat"),
+            SizedBox(
+              height: 12,
+            ),
+            Text("Raffles College - Kebon Jeruk"),
+            Text("Jalan Arjuna Utara no. 35 Jakarta Barat."),
+            Text("Sekolah Victory Plus Bekasi,"),
+            SizedBox(
+              height: 12,
+            ),
+            Text("Perumahan Kemang Pratama,"),
+            Text("Jalan Citra Niaga Raya Bloc AO1-14,"),
+            Text("Bojong Rawalumbu Kota Bekasi."),
+          ],
+        ),
+      ],
     ];
   }
 }

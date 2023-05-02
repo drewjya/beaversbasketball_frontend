@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
+import 'package:beaverbasketball/src/features/content/view/about/about_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -32,10 +33,10 @@ class HomeContent extends HookConsumerWidget {
     }, [ref.watch(youtubeDataProvider)]);
 
     return ref.watch(youtubeDataProvider).when(data: (data) {
-      return CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: Column(
+      return SingleChildScrollView(
+        child: Column(
+          children: [
+            Column(
               children: [
                 Text(
                   "BEAVERS BASKETBALL CLUB",
@@ -43,6 +44,7 @@ class HomeContent extends HookConsumerWidget {
                     fontSize: 30,
                     fontFamily: 'Demonized',
                   ),
+                  textAlign: TextAlign.center,
                 ),
                 Text(
                   "STAY TOGETHER AND BE BRAVE",
@@ -50,36 +52,37 @@ class HomeContent extends HookConsumerWidget {
                     fontFamily: 'Demonized',
                   ),
                 ),
+                YoutubePlayer(
+                  controller: controller,
+                  aspectRatio: 5.5 / 2,
+                ),
               ],
             ),
-          ),
-          SliverToBoxAdapter(
-            child: YoutubePlayer(
-              controller: controller,
-              aspectRatio: 5 / 2,
-            ),
-          ),
-          SliverGrid.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                childAspectRatio: 1.2,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10),
-            itemBuilder: (context, index) {
-              final youtube = data[index];
+            GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  childAspectRatio: 1.2,
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 10),
+              itemBuilder: (context, index) {
+                final youtube = data[index];
 
-              return Center(
-                child: YoutubeCard(
-                  youtube: youtube,
-                  onTap: (p0) {
-                    controller.loadVideoById(videoId: p0);
-                  },
-                ),
-              );
-            },
-            itemCount: (data).length,
-          ),
-        ],
+                return Center(
+                  child: YoutubeCard(
+                    youtube: youtube,
+                    onTap: (p0) {
+                      controller.loadVideoById(videoId: p0);
+                    },
+                  ),
+                );
+              },
+              itemCount: (data).length,
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+            ),
+            FooterWidget()
+          ],
+        ),
       );
     }, error: (error, _) {
       return Center(child: Text("data"));

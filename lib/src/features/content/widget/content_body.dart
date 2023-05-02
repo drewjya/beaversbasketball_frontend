@@ -24,8 +24,14 @@ class ContentBody extends StatelessWidget {
       case NavbarFilter.coach:
         return CoachView();
       default:
-        return Center(
-          child: Text(filter.value),
+        return Column(
+          children: [
+            Center(
+              child: Text(filter.value),
+            ),
+            Spacer(),
+            FooterWidget(),
+          ],
         );
     }
   }

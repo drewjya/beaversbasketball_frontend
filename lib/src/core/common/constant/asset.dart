@@ -7,4 +7,5 @@ class AssetConstant {
   static const iconEmail = "assets/logo/email.png";
   static const iconTokopedia = "assets/logo/tokopedia.png";
   static const iconYoutube = "assets/logo/youtube.png";
+  static const iconBPJS = "assets/logo/bpjs.png";
 }
