@@ -1,5 +1,4 @@
-import 'package:beaverbasketball/src/features/content/model/youtube_model.dart';
-import 'package:beaverbasketball/src/features/content/repository/content_repository_impl.dart';
+import 'package:beaverbasketball/src/src.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'content_providers.g.dart';
@@ -34,12 +33,23 @@ class CurrentIndexAbout extends _$CurrentIndexAbout {
   }
 }
 
-
-
 @Riverpod(keepAlive: true)
 class YoutubeData extends _$YoutubeData {
   @override
-  FutureOr<List<YoutubeModel>> build() async{
+  FutureOr<List<YoutubeModel>> build() async {
     return ContentRepositoryImpl().loadYoutubePost();
   }
 }
+
+class SizeNotifier extends Notifier<Size> {
+  @override
+  build() {
+    return Size(0, 0);
+  }
+
+  setSize(Size size) {
+    state = size;
+  }
+}
+
+final sizeProvider = NotifierProvider<SizeNotifier, Size>(SizeNotifier.new);

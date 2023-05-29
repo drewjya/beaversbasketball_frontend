@@ -1,15 +1,14 @@
-import 'package:beaverbasketball/src/core/http/http_wrapper.dart';
-import 'package:beaverbasketball/src/features/content/model/youtube_model.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'content_repository.dart';
+import 'package:beaverbasketball/src/src.dart';
 
-//AIzaSyBYnhuaSpaPXeakbujqOqNIAuKsSNB49Vo
+const _apiKey1 = "AIzaSyBYnhuaSpaPXeakbujqOqNIAuKsSNB49Vo";
+const _apiKey2 = "AIzaSyAUo0xmh0jiQffKxa8mK6fhxJBXX3uenJw";
+
 //AIzaSyAUo0xmh0jiQffKxa8mK6fhxJBXX3uenJw
 class ContentRepositoryImpl extends ContentRepository {
   @override
   Future<List<YoutubeModel>> loadYoutubePost() async {
     final url =
-        "https://www.googleapis.com/youtube/v3/search?channelId=UCqQ32OBHgYtWcxCXjT-vRxQ&maxResults=6&key=AIzaSyBYnhuaSpaPXeakbujqOqNIAuKsSNB49Vo&order=date&part=snippet";
+        "https://www.googleapis.com/youtube/v3/search?channelId=UCqQ32OBHgYtWcxCXjT-vRxQ&maxResults=6&key=$_apiKey2&order=date&part=snippet";
 
     final data = await HttpWrapper.get(
       url: url,

@@ -1,7 +1,28 @@
-import 'package:beaverbasketball/src/core/common/constant/enum.dart';
-import 'package:beaverbasketball/src/features/content/view/content_view.dart';
-import 'package:flutter/material.dart';
+import 'package:beaverbasketball/src/src.dart';
 import 'package:go_router/go_router.dart';
+
+CustomTransitionPage buildPageWithDefaultTransition<T>({
+  required BuildContext context,
+  required GoRouterState state,
+  required Widget child,
+}) {
+  return CustomTransitionPage<T>(
+    key: state.pageKey,
+    child: child,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+        FadeTransition(opacity: animation, child: child),
+  );
+}
+
+Page<dynamic> Function(BuildContext, GoRouterState) defaultPageBuilder<T>(
+        Widget child) =>
+    (BuildContext context, GoRouterState state) {
+      return buildPageWithDefaultTransition<T>(
+        context: context,
+        state: state,
+        child: child,
+      );
+    };
 
 class RouteApp {
   static GoRouter route = GoRouter(
@@ -14,6 +35,11 @@ class RouteApp {
             filter: NavbarFilter.home,
           );
         },
+        pageBuilder: defaultPageBuilder(
+          ContentView(
+            filter: NavbarFilter.home,
+          ),
+        ),
         routes: <RouteBase>[
           GoRoute(
             path: 'about',
@@ -23,6 +49,11 @@ class RouteApp {
                 filter: NavbarFilter.about,
               );
             },
+            pageBuilder: defaultPageBuilder(
+              ContentView(
+                filter: NavbarFilter.about,
+              ),
+            ),
           ),
           GoRoute(
             path: 'coach',
@@ -32,6 +63,11 @@ class RouteApp {
                 filter: NavbarFilter.coach,
               );
             },
+            pageBuilder: defaultPageBuilder(
+              ContentView(
+                filter: NavbarFilter.coach,
+              ),
+            ),
           ),
           GoRoute(
             path: 'gallery',
@@ -41,6 +77,11 @@ class RouteApp {
                 filter: NavbarFilter.gallery,
               );
             },
+            pageBuilder: defaultPageBuilder(
+              ContentView(
+                filter: NavbarFilter.gallery,
+              ),
+            ),
           ),
           GoRoute(
             path: 'schedule',
@@ -50,6 +91,11 @@ class RouteApp {
                 filter: NavbarFilter.schedule,
               );
             },
+            pageBuilder: defaultPageBuilder(
+              ContentView(
+                filter: NavbarFilter.schedule,
+              ),
+            ),
           ),
           GoRoute(
             path: 'registration',
@@ -59,6 +105,11 @@ class RouteApp {
                 filter: NavbarFilter.registration,
               );
             },
+            pageBuilder: defaultPageBuilder(
+              ContentView(
+                filter: NavbarFilter.registration,
+              ),
+            ),
           ),
           GoRoute(
             path: 'achievement',
@@ -68,6 +119,25 @@ class RouteApp {
                 filter: NavbarFilter.achievement,
               );
             },
+            pageBuilder: defaultPageBuilder(
+              ContentView(
+                filter: NavbarFilter.achievement,
+              ),
+            ),
+          ),
+          GoRoute(
+            path: 'login',
+            name: 'login',
+            builder: (BuildContext context, GoRouterState state) {
+              return ContentView(
+                filter: NavbarFilter.login,
+              );
+            },
+            pageBuilder: defaultPageBuilder(
+              ContentView(
+                filter: NavbarFilter.login,
+              ),
+            ),
           ),
           GoRoute(
             path: 'news',
@@ -77,6 +147,11 @@ class RouteApp {
                 filter: NavbarFilter.news,
               );
             },
+            pageBuilder: defaultPageBuilder(
+              ContentView(
+                filter: NavbarFilter.news,
+              ),
+            ),
           ),
         ],
       ),

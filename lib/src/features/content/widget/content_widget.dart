@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:beaverbasketball/src/src.dart';
 
 class ContentWidget extends StatelessWidget {
   /// TODO add your comment here

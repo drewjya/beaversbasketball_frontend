@@ -6,8 +6,8 @@ enum NavbarFilter {
   schedule(value: "schedule"),
   registration(value: "registration"),
   achievement(value: "achievement"),
-  store(value: "store"),
-  news(value: "news");
+  news(value: "news"),
+  login(value: "login");
 
   final String value;
   const NavbarFilter({required this.value});

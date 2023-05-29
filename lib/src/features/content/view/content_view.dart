@@ -1,13 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
-import 'package:beaverbasketball/src/core/common/constant/enum.dart';
-import 'package:beaverbasketball/src/features/content/widget/content_body.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:beaverbasketball/src/src.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-import 'package:beaverbasketball/src/core/common/constant/asset.dart';
 
 class ContentView extends HookConsumerWidget {
   final NavbarFilter filter;
@@ -46,7 +40,6 @@ class ContentView extends HookConsumerWidget {
                     SizedBox(
                       width: 20,
                     ),
-                    
                     NavigationItem(
                       isActive: filter == NavbarFilter.coach,
                       label: "Coach",
@@ -82,10 +75,6 @@ class ContentView extends HookConsumerWidget {
                     SizedBox(
                       width: 20,
                     ),
-                    NavigationItem(
-                      isActive: filter == NavbarFilter.store,
-                      label: "Store",
-                    ),
                     SizedBox(
                       width: 20,
                     ),
@@ -101,7 +90,7 @@ class ContentView extends HookConsumerWidget {
                       label: "Registration",
                     ),
                     SizedBox(
-                      height: 20,
+                      width: 20,
                     ),
                     Spacer(),
                     Text("Stay Together And Be Brave"),
@@ -179,6 +168,9 @@ class ContentView extends HookConsumerWidget {
                   NavigationItem(
                     isActive: filter == NavbarFilter.registration,
                     label: "Registration",
+                  ),
+                  SizedBox(
+                    width: 20,
                   ),
                   SizedBox(
                     width: 40,

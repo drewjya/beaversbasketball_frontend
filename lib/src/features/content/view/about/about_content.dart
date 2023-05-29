@@ -2,15 +2,7 @@
 
 import 'dart:math';
 
-import 'package:beaverbasketball/src/core/common/constant/asset.dart';
-import 'package:beaverbasketball/src/core/common/widget/measure_size.dart';
-import 'package:beaverbasketball/src/features/content/providers/content_providers.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_sticky_header/flutter_sticky_header.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-import 'package:beaverbasketball/src/core/common/constant/enum.dart';
+import 'package:beaverbasketball/src/src.dart';
 
 scrollLoggerListener(ScrollController controller, WidgetRef ref) {
   if (controller.hasClients) {
@@ -35,124 +27,186 @@ class AboutContent extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    final controller = useScrollController();
-    useEffect(() {
-      controller.addListener(() => scrollLoggerListener(controller, ref));
-      return null;
-    }, [""]);
-
-    final isActionEnabled = MediaQuery.of(context).size.width > 800;
-
-    return CustomScrollView(
-      controller: controller,
-      slivers: [
-        SliverStickyHeader(
-          header: Container(
-            height: 40,
-            decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-            padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text.rich(
-                TextSpan(
-                    text: "/",
-                    style: TextStyle(
-                      fontSize: 20,
-                    ),
-                    children: ["history", "organisasi"]
-                        .take(ref.watch(currentIndexAboutProvider) + 1)
-                        .mapIndexed(
-                          (e, i, first, last) => TextSpan(
-                              text: "$i/",
-                              style: TextStyle(
-                                  fontWeight: last ? FontWeight.w700 : null)),
-                        )
-                        .toList()),
-              ),
+    return ListView(
+      children: [
+        SizedBox(
+          height: 15,
+        ),
+        Center(
+          child: Text(
+            "History",
+            style: TextStyle(
+              fontSize: 30,
             ),
           ),
-          sticky: true,
-          sliver: SliverToBoxAdapter(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+        ),
+        SizedBox(
+          height: 35,
+        ),
+        Container(
+          height: 300,
+          margin: EdgeInsets.symmetric(horizontal: 20),
+          padding: EdgeInsets.symmetric(horizontal: 30),
+          color: Colors.red,
+          child: Center(
+            child: Text(
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+              style: TextStyle(
+                fontSize: 20,
+              ),
+              textAlign: TextAlign.justify,
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 30,
+        ),
+        Center(
+          child: Text(
+            "FOUNDER",
+            style: TextStyle(
+              fontSize: 30,
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 30,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0)
+              .copyWith(top: 8, bottom: 20),
+          child: Center(
+            child: Wrap(
+              alignment: WrapAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.center,
               children: [
-                SubtitleWidget(label: "History"),
-                MeasureSize(
-                  onChange: (size) {
-                    ref
-                        .read(aboutPotitionProvider.notifier)
-                        .addValue(MapEntry("history", size.height));
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0)
-                        .copyWith(top: 8),
-                    child: Text("""
-                Perbasi didirikan pada tahun 1951, Komite Olimpiade Indonesia (KOI) untuk menyusun organisasi olahraga bola basket Indonesia. Atas prakarsa kedua tokoh ini, pada tanggal 23 Oktober 1951 dibentuklah organisasi bola basket Indonesia dengan nama Persatuan Basketball Seluruh Indonesia, disingkat Perbasi. Tony Wen menduduki jabatan ketua serta Wim Latumeten sebagai sekretaris. Tahun 1955 namanya diubah dan disesuaikan dengan perbendaharaan bahasa Indonesia, menjadi Persatuan Bola Basket Seluruh Indonesia dan tetap disingkat Perbasi.
-                
-                Perbasi menganut sistem vertikal berjenjang, yang dimulai dari tingkat perkumpulan, pengurus cabang (pengcab) Perbasi, pengurus daerah (pengda) Perbasi, sampai kepada pengurus besar (PB) Perbasi. Dalam perjalanannya PB Perbasi telah beberapa kali berganti kepengurusan. Tercatat pengusaha muda Noviantika Nasution pernah menjabat sebagai Ketua Umum PB Perbasi masa jabatan 2006-2010, setelah sebelumnya jabatan Ketua Umum dipegang oleh Gubernur DKI, Sutiyoso.
-                
-                Pada 2010 Ketua Umum PB Perbasi dipegang oleh mantan Kepala Badan Kebijakan Fiskal Kementerian Keuangan Republik Indonesia Anggito Abimanyu, setelah unggul 133 suara dari satu calon lainnya Azrul Ananda di Musyawarah Nasional Perbasi di Jakarta.[1]
-                
-                Tahapan kongres yang molor membuat kongres baru bisa digelar 13-14 Maret 2015. Danny Kosasih terpilih dengan mengalahkan Azrul."""),
-                  ),
+                CircleAvatar(
+                  radius: 80,
                 ),
-                MeasureSize(
-                  onChange: (size) {
-                    ref
-                        .read(aboutPotitionProvider.notifier)
-                        .addValue(MapEntry("history", size.height));
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Divider(
-                      thickness: 2,
-                    ),
-                  ),
+                SizedBox(
+                  width: 20,
                 ),
-                SubtitleWidget(label: "Organisasi"),
-                MeasureSize(
-                  onChange: (size) {
-                    ref
-                        .read(aboutPotitionProvider.notifier)
-                        .addValue(MapEntry("organisasi", size.height));
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0)
-                        .copyWith(top: 8, bottom: 20),
-                    child: Center(
-                      child: Wrap(
-                        alignment: WrapAlignment.center,
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        children: [
-                          CircleAvatar(
-                            radius: 80,
-                          ),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          CircleAvatar(
-                            radius: 80,
-                          ),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          CircleAvatar(
-                            radius: 80,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                CircleAvatar(
+                  radius: 80,
                 ),
-                FooterWidget(),
+                SizedBox(
+                  width: 20,
+                ),
+                CircleAvatar(
+                  radius: 80,
+                ),
               ],
             ),
           ),
         ),
+        FooterWidget(),
+        // SliverStickyHeader(
+        //   header: Container(
+        //     height: 40,
+        //     decoration: BoxDecoration(
+        //       color: Theme.of(context).primaryColor,
+        //       borderRadius: BorderRadius.circular(10),
+        //     ),
+        //     margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+        //     padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+        //     child: Align(
+        //       alignment: Alignment.centerLeft,
+        //       child: Text.rich(
+        //         TextSpan(
+        //             text: "/",
+        //             style: TextStyle(
+        //               fontSize: 20,
+        //             ),
+        //             children: ["history", "organisasi"]
+        //                 .take(ref.watch(currentIndexAboutProvider) + 1)
+        //                 .mapIndexed(
+        //                   (e, i, first, last) => TextSpan(
+        //                       text: "$i/",
+        //                       style: TextStyle(
+        //                           fontWeight: last ? FontWeight.w700 : null)),
+        //                 )
+        //                 .toList()),
+        //       ),
+        //     ),
+        //   ),
+        //   sticky: true,
+        //   sliver: SliverToBoxAdapter(
+        //     child: Column(
+        //       crossAxisAlignment: CrossAxisAlignment.start,
+        //       children: [
+        //         SubtitleWidget(label: "History"),
+        //         MeasureSize(
+        //           onChange: (size) {
+        //             ref
+        //                 .read(aboutPotitionProvider.notifier)
+        //                 .addValue(MapEntry("history", size.height));
+        //           },
+        //           child: Padding(
+        //             padding: const EdgeInsets.symmetric(horizontal: 10.0)
+        //                 .copyWith(top: 8),
+        //             child: Text("""
+        //         Perbasi didirikan pada tahun 1951, Komite Olimpiade Indonesia (KOI) untuk menyusun organisasi olahraga bola basket Indonesia. Atas prakarsa kedua tokoh ini, pada tanggal 23 Oktober 1951 dibentuklah organisasi bola basket Indonesia dengan nama Persatuan Basketball Seluruh Indonesia, disingkat Perbasi. Tony Wen menduduki jabatan ketua serta Wim Latumeten sebagai sekretaris. Tahun 1955 namanya diubah dan disesuaikan dengan perbendaharaan bahasa Indonesia, menjadi Persatuan Bola Basket Seluruh Indonesia dan tetap disingkat Perbasi.
+
+        //         Perbasi menganut sistem vertikal berjenjang, yang dimulai dari tingkat perkumpulan, pengurus cabang (pengcab) Perbasi, pengurus daerah (pengda) Perbasi, sampai kepada pengurus besar (PB) Perbasi. Dalam perjalanannya PB Perbasi telah beberapa kali berganti kepengurusan. Tercatat pengusaha muda Noviantika Nasution pernah menjabat sebagai Ketua Umum PB Perbasi masa jabatan 2006-2010, setelah sebelumnya jabatan Ketua Umum dipegang oleh Gubernur DKI, Sutiyoso.
+
+        //         Pada 2010 Ketua Umum PB Perbasi dipegang oleh mantan Kepala Badan Kebijakan Fiskal Kementerian Keuangan Republik Indonesia Anggito Abimanyu, setelah unggul 133 suara dari satu calon lainnya Azrul Ananda di Musyawarah Nasional Perbasi di Jakarta.[1]
+
+        //         Tahapan kongres yang molor membuat kongres baru bisa digelar 13-14 Maret 2015. Danny Kosasih terpilih dengan mengalahkan Azrul."""),
+        //           ),
+        //         ),
+        //         MeasureSize(
+        //           onChange: (size) {
+        //             ref
+        //                 .read(aboutPotitionProvider.notifier)
+        //                 .addValue(MapEntry("history", size.height));
+        //           },
+        //           child: Padding(
+        //             padding: const EdgeInsets.all(10.0),
+        //             child: Divider(
+        //               thickness: 2,
+        //             ),
+        //           ),
+        //         ),
+        //         SubtitleWidget(label: "Organisasi"),
+        //         MeasureSize(
+        //           onChange: (size) {
+        //             ref
+        //                 .read(aboutPotitionProvider.notifier)
+        //                 .addValue(MapEntry("organisasi", size.height));
+        //           },
+        // child: Padding(
+        //   padding: const EdgeInsets.symmetric(horizontal: 10.0)
+        //       .copyWith(top: 8, bottom: 20),
+        //   child: Center(
+        //     child: Wrap(
+        //       alignment: WrapAlignment.center,
+        //       crossAxisAlignment: WrapCrossAlignment.center,
+        //       children: [
+        //         CircleAvatar(
+        //           radius: 80,
+        //         ),
+        //         SizedBox(
+        //           width: 20,
+        //         ),
+        //         CircleAvatar(
+        //           radius: 80,
+        //         ),
+        //         SizedBox(
+        //           width: 20,
+        //         ),
+        //         CircleAvatar(
+        //           radius: 80,
+        //         ),
+        //       ],
+        //     ),
+        //   ),
+        // ),
+        //         ),
+        //         FooterWidget(),
+        //       ],
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }

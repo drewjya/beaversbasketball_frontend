@@ -1,10 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:beaverbasketball/src/features/content/view/about/about_content.dart';
-import 'package:beaverbasketball/src/features/content/view/coach/coach_view.dart';
-import 'package:beaverbasketball/src/features/content/view/home/home_content.dart';
-import 'package:flutter/material.dart';
-
-import 'package:beaverbasketball/src/core/common/constant/enum.dart';
+import 'package:beaverbasketball/src/src.dart';
 
 class ContentBody extends StatelessWidget {
   final NavbarFilter filter;
@@ -23,16 +18,18 @@ class ContentBody extends StatelessWidget {
 
       case NavbarFilter.coach:
         return CoachView();
-      default:
-        return Column(
-          children: [
-            Center(
-              child: Text(filter.value),
-            ),
-            Spacer(),
-            FooterWidget(),
-          ],
-        );
+      case NavbarFilter.gallery:
+        return GalleryView();
+      case NavbarFilter.schedule:
+        return ScheduleView();
+      case NavbarFilter.achievement:
+        return AchievementView();
+      case NavbarFilter.news:
+        return NewsView();
+      case NavbarFilter.login:
+        return LoginView();
+      case NavbarFilter.registration:
+        return RegisterView();
     }
   }
 }

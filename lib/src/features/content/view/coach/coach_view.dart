@@ -1,6 +1,4 @@
-import 'package:beaverbasketball/src/core/common/constant/enum.dart';
-import 'package:beaverbasketball/src/features/content/view/about/about_content.dart';
-import 'package:flutter/material.dart';
+import 'package:beaverbasketball/src/src.dart';
 
 class CoachView extends StatelessWidget {
   const CoachView({Key? key}) : super(key: key);
@@ -20,29 +18,33 @@ class CoachView extends StatelessWidget {
       "Coach Fernando",
       "Coach Hendra",
     ];
-    return ListView(
-      children: [
-        SubtitleWidget(label: "Coach"),
-        ...listCoach.mapIndexed(
-          (index, e, start, end) => Padding(
-            padding: start ? const EdgeInsets.only(top: 8.0) : EdgeInsets.zero,
-            child: ListTile(
-              title: Text(
-                e,
-                style: TextStyle(
-                  color: Colors.white,
+    return CustomScrollView(
+      slivers: [
+        SliverAppBar(
+          automaticallyImplyLeading: false,
+          leading: SizedBox(),
+          title: SubtitleWidget(label: "Coach"),
+          actions: [SizedBox()],
+          centerTitle: true,
+          backgroundColor: Colors.transparent,
+        ),
+        SliverGrid.builder(
+          gridDelegate:
+              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+          itemBuilder: (context, index) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  radius: 65,
                 ),
-              ),
-            ),
-          ),
+                Text(listCoach[index])
+              ],
+            );
+          },
+          itemCount: listCoach.length,
         ),
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Divider(
-            thickness: 2,
-          ),
-        ),
-        FooterWidget()
+        SliverToBoxAdapter(child: FooterWidget())
       ],
     );
   }
