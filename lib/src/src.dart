@@ -1,5 +1,8 @@
+import 'package:beaverbasketball/src/src.dart';
+
 export 'core/common/constant/asset.dart';
 export 'core/common/constant/enum.dart';
+export 'core/common/widget/footer_content.dart';
 export 'core/common/widget/measure_size.dart';
 export 'core/http/http_wrapper.dart';
 export 'core/routes/route.dart';
@@ -28,3 +31,7 @@ export 'features/content/view/schedule/schedule_view.dart';
 export 'features/content/widget/content_body.dart';
 export 'features/content/widget/content_widget.dart';
 export 'features/features.dart';
+
+const PRIMARY = Color(0xffEB1328);
+const NAVBAR = Color(0xff960D18);
+const BACKGROUND_CONTENT = Color(0xff1E1E1E);

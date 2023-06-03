@@ -1,43 +1,33 @@
-import 'package:beaverbasketball/src/features/content/view/about/about_content.dart';
-import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:beaverbasketball/src/src.dart';
 
 class ScheduleView extends HookConsumerWidget {
   const ScheduleView({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isActionEnabled = MediaQuery.of(context).size.width > 800;
     return ListView(
       children: [
         SizedBox(
-          height: 15,
+          height: !isActionEnabled ? 24 : 48,
         ),
-        Center(
-          child: Text(
-            "Schedule",
-            style: TextStyle(
-              fontSize: 30,
-            ),
+        Text(
+          "JADWAL RUTIN",
+          style: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.w800,
           ),
+          textAlign: TextAlign.center,
         ),
         SizedBox(
-          height: 35,
-        ),
-        Center(
-          child: Text(
-            "Jadwal Rutin",
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 35,
+          height: !isActionEnabled ? 24 : 48,
         ),
         ...List.generate(
           2,
           (index) => Container(
-            color: Colors.blueGrey,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: BACKGROUND_CONTENT,
+            ),
             margin: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
             padding: EdgeInsets.all(20),
             child: Column(
@@ -46,31 +36,45 @@ class ScheduleView extends HookConsumerWidget {
                   child: Text(
                     "Wednesday",
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 25,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
                 ),
-                ...List.generate(
-                  2,
-                  (index) => Container(
+                ...["16.00 - 18.00", "19.00 - 20.00"].map(
+                  (value) => Container(
                     padding: EdgeInsets.all(10),
-                    color: Colors.amberAccent,
+                    margin: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: NAVBAR,
+                      borderRadius: BorderRadius.circular(
+                        10,
+                      ),
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          "16.00-18.00",
+                          value,
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 18,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
-                        Text("""
+                        SizedBox(
+                          height: !isActionEnabled ? 8 : 12,
+                        ),
+                        Text(
+                          """
 RC 1 = KU 14 16 18 Beginner Putra + KU 18 Putri 
 RC 2 = KU 14 16 18 Expert Putra
 RC 3 = Toddler + KU 10 Mix
-""")
+""",
+                          style: TextStyle(
+                            fontSize: 14,
+                          ),
+                        )
                       ],
                     ),
                   ),
@@ -79,55 +83,65 @@ RC 3 = Toddler + KU 10 Mix
             ),
           ),
         ),
-        Center(
-          child: Text(
-            "EVENTS",
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
+        SizedBox(
+          height: !isActionEnabled ? 24 : 48,
         ),
         SizedBox(
-          height: 35,
+          height: !isActionEnabled ? 24 : 48,
+        ),
+        Text(
+          "EVENTS",
+          style: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.w800,
+          ),
+          textAlign: TextAlign.center,
         ),
         Container(
-          color: Colors.red,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: NAVBAR,
+          ),
           margin: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
           padding: EdgeInsets.all(20),
           child: Column(
             children: [
               Center(
                 child: Text(
-                  "Wednesday",
+                  "7 JUNE 2023 - WEDNESDAY",
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
               ),
-              ...List.generate(
-                2,
-                (index) => Container(
-                  padding: EdgeInsets.all(10),
-                  color: Colors.amberAccent,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        "16.00-18.00",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                        ),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                padding: EdgeInsets.all(10),
+                margin: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+                decoration: BoxDecoration(
+                  color: BACKGROUND_CONTENT,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                width: double.infinity,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "16.00-18.00",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
                       ),
-                      Text("""
+                    ),
+                    Text("""
 RC 1 = KU 14 16 18 Beginner Putra + KU 18 Putri 
 RC 2 = KU 14 16 18 Expert Putra
 RC 3 = Toddler + KU 10 Mix
 """)
-                    ],
-                  ),
+                  ],
                 ),
               ),
             ],

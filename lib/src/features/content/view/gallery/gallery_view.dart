@@ -4,72 +4,92 @@ class GalleryView extends HookConsumerWidget {
   const GalleryView({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isActionEnabled = MediaQuery.of(context).size.width > 800;
     return ListView(
       children: [
         SizedBox(
-          height: 15,
+          height: !isActionEnabled ? 24 : 48,
         ),
-        Center(
-          child: Text(
-            "Gallery",
-            style: TextStyle(
-              fontSize: 30,
-            ),
+        Text(
+          "GALLERY",
+          style: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.w800,
           ),
+          textAlign: TextAlign.center,
         ),
         SizedBox(
-          height: 35,
+          height: !isActionEnabled ? 24 : 48,
         ),
         ...List.generate(
-          2,
+          5,
           (index) => Container(
-            height: 220,
-            color: Colors.amber,
-            margin: EdgeInsets.all(20),
+            height: MediaQuery.of(context).size.height * 0.27,
+            decoration: BoxDecoration(
+                color: BACKGROUND_CONTENT,
+                border: Border.all(
+                  color: NAVBAR,
+                )),
+            margin: EdgeInsets.all(30),
             child: Column(
               children: [
-                Text("Outing $index"),
-                Expanded(
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          margin: EdgeInsets.all(8),
-                          color: Colors.grey,
-                          child: Center(
-                            child: Text(
-                              "Foto 1",
-                            ),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Container(
-                          margin: EdgeInsets.all(8),
-                          color: Colors.grey,
-                          child: Center(
-                            child: Text(
-                              "Foto 2",
-                            ),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Container(
-                          margin: EdgeInsets.all(8),
-                          color: Colors.grey,
-                          child: Center(
-                            child: Text(
-                              "Foto 3",
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                SizedBox(
+                  height: !isActionEnabled ? 18 : 28,
                 ),
-                Text(DateTime.now().toString()),
-                Text("More Pictures:  "),
+                Text(
+                  "OUTING $index",
+                  style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.w800,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: !isActionEnabled ? 18 : 28,
+                ),
+                Expanded(
+                    child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 60.0),
+                  child: GridView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 60,
+                        mainAxisSpacing: 60),
+                    itemBuilder: (context, index) {
+                      return Container(
+                        color: NAVBAR,
+                        child: Text("$index"),
+                      );
+                    },
+                  ),
+                )),
+                SizedBox(
+                  height: !isActionEnabled ? 18 : 28,
+                ),
+                Text(
+                  DateTime.now().toString(),
+                  style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.w800,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: !isActionEnabled ? 18 : 28,
+                ),
+                Text(
+                  "More Pictures:  ",
+                  style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.w800,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: !isActionEnabled ? 18 : 28,
+                ),
               ],
             ),
           ),

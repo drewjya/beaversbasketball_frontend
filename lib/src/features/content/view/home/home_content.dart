@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:beaverbasketball/src/src.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
@@ -17,6 +18,9 @@ class HomeContent extends HookConsumerWidget {
                 showFullscreenButton: true,
               ),
             ));
+    final carouselController = useMemoized(
+      () => CarouselController(),
+    );
     final focusNode = useFocusNode();
     final isFocused = useState(false);
 
@@ -32,19 +36,58 @@ class HomeContent extends HookConsumerWidget {
         }
       });
 
-      return () => focusNode.dispose();
-    }, [ref.watch(youtubeDataProvider)]);
+      return;
+    }, [ref.watch(youtubeDataProvider), focusNode]);
     final isActionEnabled = MediaQuery.of(context).size.width > 800;
     return ref.watch(youtubeDataProvider).when(data: (data) {
       return SingleChildScrollView(
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.all(20),
+              padding: EdgeInsets.symmetric(vertical: 20),
               child: Container(
                 height: !isActionEnabled ? 200 : 400,
                 width: double.infinity,
-                color: Colors.green,
+                child: Stack(
+                  children: [
+                    CarouselSlider(
+                      carouselController: carouselController,
+                      options: CarouselOptions(height: 400.0),
+                      items: [1, 2, 3, 4, 5].map((i) {
+                        return Builder(
+                          builder: (BuildContext context) {
+                            return Container(
+                                width: MediaQuery.of(context).size.width,
+                                margin: EdgeInsets.symmetric(horizontal: 5.0),
+                                decoration: BoxDecoration(color: Colors.amber),
+                                child: Center(
+                                  child: Text(
+                                    'text $i',
+                                    style: TextStyle(fontSize: 16.0),
+                                  ),
+                                ));
+                          },
+                        );
+                      }).toList(),
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: IconButton(
+                          onPressed: () {
+                            carouselController.previousPage();
+                          },
+                          icon: Icon(Icons.arrow_back_ios_new_rounded)),
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: IconButton(
+                          onPressed: () {
+                            carouselController.nextPage();
+                          },
+                          icon: Icon(Icons.arrow_forward_ios_rounded)),
+                    ),
+                  ],
+                ),
               ),
             ),
             SizedBox(
@@ -55,40 +98,41 @@ class HomeContent extends HookConsumerWidget {
               child: Column(
                 children: [
                   Text(
-                    "BEAVERS BASKETBALL CLUB",
+                    "WELCOME",
                     style: TextStyle(
                       fontSize: 25,
-                      fontFamily: 'Demonized',
+                      fontWeight: FontWeight.w800,
                     ),
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(
-                    height: 16,
-                  ),
-                  Text(
-                    "STAY TOGETHER AND BE BRAVE",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontFamily: 'Demonized',
-                    ),
-                  ),
-                  SizedBox(
-                    height: !isActionEnabled ? 16 : 48,
+                    height: !isActionEnabled ? 24 : 48,
                   ),
                   Container(
+                    margin: EdgeInsets.symmetric(horizontal: 30),
                     padding: EdgeInsets.all(30),
-                    color: Colors.green,
+                    decoration: BoxDecoration(
+                      color: BACKGROUND_CONTENT,
+                      border: Border.all(color: PRIMARY),
+                    ),
                     child: Text(
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eleifend turpis vitae augue finibus accumsan. Nam placerat vulputate eros sit amet ullamcorper. Nunc tempus nisl lacinia, semper justo eget, consectetur mi. Cras pulvinar est id iaculis viverra. Pellentesque vitae iaculis turpis, non imperdiet lorem. Duis eget ex et diam convallis suscipit. Duis scelerisque nunc non mi facilisis, non fringilla tellus pulvinar. Etiam viverra malesuada laoreet. Nullam risus mi, aliquam ac ante at, tristique pellentesque mauris. Donec eu ipsum nibh. Integer tincidunt est ut turpis dignissim, eget elementum orci euismod. Aenean tellus sapien, scelerisque non turpis vitae, lacinia bibendum justo. Nunc vehicula quam ac lacus interdum, et egestas nisl sollicitudin."),
+                      "Selamat datang di official website dari Beavers Basketball Club. Website ini dibuat supaya teman-teman semua bisa mengenal lebih dekat dengan Beavers Basketball Club. Jika teman-teman memiliki pertanyaan lebih lanjut silahkan hubungi admin Wa sesuai dengan lokasi latihan kalian. See You On Court BRAVER !",
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
                   ),
                   SizedBox(
-                    height: !isActionEnabled ? 16 : 48,
+                    height: !isActionEnabled ? 24 : 48,
                   ),
                   Text(
-                    "Youtube",
+                    "YOUTUBE",
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 25,
+                      fontWeight: FontWeight.w800,
                     ),
+                    textAlign: TextAlign.center,
                   ),
                   SizedBox(
                     height: !isActionEnabled ? 16 : 48,
@@ -106,7 +150,11 @@ class HomeContent extends HookConsumerWidget {
                     },
                     child: Stack(
                       children: [
-                        SizedBox(
+                        Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                            color: PRIMARY,
+                          )),
                           width: MediaQuery.of(context).size.width * 0.7,
                           child: YoutubePlayer(
                             enableFullScreenOnVerticalDrag: false,
@@ -164,34 +212,46 @@ class HomeContent extends HookConsumerWidget {
               physics: NeverScrollableScrollPhysics(),
             ),
             SizedBox(
-              height: !isActionEnabled ? 16 : 48,
+              height: !isActionEnabled ? 24 : 48,
             ),
-            Center(child: Text("Supported By")),
-            Container(
-              height: ref.watch(sizeProvider).height,
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                children: [
-                  Expanded(
-                      child: Container(
-                    margin: EdgeInsets.all(5).copyWith(left: 0),
-                    color: Colors.red,
-                  )),
-                  Expanded(
-                      child: Container(
-                    margin: EdgeInsets.all(5),
-                    color: Colors.green,
-                  )),
-                  Expanded(
-                      child: Container(
-                    margin: EdgeInsets.all(5).copyWith(right: 0),
-                    color: Colors.blue,
-                  )),
-                ],
+            Text(
+              "SUPPORTED BY",
+              style: TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.w800,
               ),
+              textAlign: TextAlign.center,
             ),
             SizedBox(
-              height: !isActionEnabled ? 16 : 48,
+              height: !isActionEnabled ? 24 : 48,
+            ),
+            GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                childAspectRatio: 1.2,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10,
+              ),
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              itemBuilder: (context, index) {
+                return Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: PRIMARY,
+                    ),
+                    color: BACKGROUND_CONTENT,
+                  ),
+                  child: Center(
+                    child: Text("$index"),
+                  ),
+                );
+              },
+              itemCount: 6,
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+            ),
+            SizedBox(
+              height: !isActionEnabled ? 24 : 48,
             ),
             FooterWidget()
           ],
@@ -236,6 +296,10 @@ class YoutubeCard extends HookWidget {
         children: [
           Center(
             child: Container(
+              decoration: BoxDecoration(
+                  border: Border.all(
+                color: PRIMARY,
+              )),
               child: Image.network(
                   "https://img.youtube.com/vi/${youtube.id}/0.jpg"),
             ),

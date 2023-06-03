@@ -1,4 +1,5 @@
 import 'package:beaverbasketball/src/src.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CoachView extends StatelessWidget {
   const CoachView({Key? key}) : super(key: key);
@@ -18,33 +19,60 @@ class CoachView extends StatelessWidget {
       "Coach Fernando",
       "Coach Hendra",
     ];
-    return CustomScrollView(
-      slivers: [
-        SliverAppBar(
-          automaticallyImplyLeading: false,
-          leading: SizedBox(),
-          title: SubtitleWidget(label: "Coach"),
-          actions: [SizedBox()],
-          centerTitle: true,
-          backgroundColor: Colors.transparent,
+    final isActionEnabled = MediaQuery.of(context).size.width > 800;
+    return ListView(
+      children: [
+        SizedBox(
+          height: !isActionEnabled ? 24 : 48,
         ),
-        SliverGrid.builder(
-          gridDelegate:
-              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-          itemBuilder: (context, index) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircleAvatar(
-                  radius: 65,
-                ),
-                Text(listCoach[index])
-              ],
-            );
-          },
-          itemCount: listCoach.length,
+        Text(
+          "COACH",
+          style: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.w800,
+          ),
+          textAlign: TextAlign.center,
         ),
-        SliverToBoxAdapter(child: FooterWidget())
+        SizedBox(
+          height: !isActionEnabled ? 24 : 48,
+        ),
+        Padding(
+          padding: const EdgeInsets.all(30),
+          child: GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3, crossAxisSpacing: 60, mainAxisSpacing: 60),
+            itemBuilder: (context, index) {
+              return Column(
+                children: [
+                  Expanded(
+                      child: Container(
+                    margin: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: BACKGROUND_CONTENT,
+                      border: Border.all(
+                        width: 4,
+                        color: NAVBAR,
+                      ),
+                    ),
+                  )),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 20),
+                    child: Text(
+                      listCoach[index],
+                      style: GoogleFonts.inter(
+                        fontSize: 25,
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            },
+            itemCount: listCoach.length,
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+          ),
+        ),
+        FooterWidget()
       ],
     );
   }

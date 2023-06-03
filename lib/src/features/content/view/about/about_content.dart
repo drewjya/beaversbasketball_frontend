@@ -1,8 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
-import 'dart:math';
-
 import 'package:beaverbasketball/src/src.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 scrollLoggerListener(ScrollController controller, WidgetRef ref) {
   if (controller.hasClients) {
@@ -27,565 +26,132 @@ class AboutContent extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
+    final isActionEnabled = MediaQuery.of(context).size.width > 800;
     return ListView(
       children: [
         SizedBox(
-          height: 15,
+          height: !isActionEnabled ? 24 : 48,
         ),
-        Center(
-          child: Text(
-            "History",
-            style: TextStyle(
-              fontSize: 30,
-            ),
+        Text(
+          "HISTORY",
+          style: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.w800,
           ),
+          textAlign: TextAlign.center,
         ),
         SizedBox(
-          height: 35,
+          height: !isActionEnabled ? 24 : 48,
         ),
         Container(
-          height: 300,
-          margin: EdgeInsets.symmetric(horizontal: 20),
-          padding: EdgeInsets.symmetric(horizontal: 30),
-          color: Colors.red,
-          child: Center(
-            child: Text(
-              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-              style: TextStyle(
-                fontSize: 20,
-              ),
-              textAlign: TextAlign.justify,
+          margin: EdgeInsets.symmetric(horizontal: isActionEnabled ? 50 : 20),
+          padding: EdgeInsets.all(50),
+          decoration: BoxDecoration(
+            color: BACKGROUND_CONTENT,
+            border: Border.all(
+              color: NAVBAR,
+              width: 3,
             ),
+            borderRadius: BorderRadius.circular(10),
           ),
-        ),
-        SizedBox(
-          height: 30,
-        ),
-        Center(
-          child: Text(
-            "FOUNDER",
+          child: DefaultTextStyle(
             style: TextStyle(
-              fontSize: 30,
+              fontSize: isActionEnabled ? 25 : 15,
+              color: Colors.white,
+            ),
+            child: Column(
+              children: [
+                Text(
+                  "Beavers Basketball Club resmi didirikan pada tanggal 1 November 2018. Beavers Basketball Club didirikan dengan landasan kuat untuk melakukan pembinaan terhadap kegiatan bola basket terutama pada kelompok umur.",
+                  textAlign: TextAlign.justify,
+                ),
+                SizedBox(height: isActionEnabled ? 20 : 10),
+                Text(
+                  "Beavers Basketball Club fokus untuk melakukan program pembinaan bola basket mulai dari usia 3 tahun sampai dengan usia 18 tahun putra dan putri.",
+                  textAlign: TextAlign.justify,
+                ),
+                SizedBox(height: isActionEnabled ? 20 : 10),
+                Text(
+                  "Selain kelompok umur pembinaan, Beavers Basketball Club juga memiliki kelompok umur 19 tahun sampai dengan 35 tahun untuk berpartisipasi di berbagai tournament dan kompetisi yang ada. Tidak berhenti sampai usia 35 tahun, Beavers Basketball Club punya tim kelompok umur 35 tahun keatas atau yang lebih dikenal dengan kelompok umur veteran.",
+                  textAlign: TextAlign.justify,
+                ),
+                SizedBox(height: isActionEnabled ? 20 : 10),
+                Text(
+                  "Beavers Basketball Club punya visi besar untuk melakukan pembinaan bola basket dengan didukung oleh kemampuan management yang baik. Management yang dimaksud mulai dari kualitas kepelatihan, keaktifan sosial media, kemampuan untuk branding yang kuat dan masih banyak hal-hal baik lainnya.",
+                  textAlign: TextAlign.justify,
+                ),
+                SizedBox(height: isActionEnabled ? 20 : 10),
+                Text(
+                  "Sebagai bentuk keserius Beavers Basketball Club juga sudah dilengkapi dengan badan hukum dengan PT BINA VISI SUKSES sebagai nama perusahaan yang terdaftar.",
+                  textAlign: TextAlign.justify,
+                ),
+                SizedBox(height: isActionEnabled ? 20 : 10),
+                Text(
+                  "Beavers Basketball Club mempunyai tagline yaitu Stay Together and Be Brave, dimana BRAVE memiliki arti yaitu Brave, Respect, Attitudes, Value dan Enthusiasm.",
+                  textAlign: TextAlign.justify,
+                ),
+                SizedBox(height: isActionEnabled ? 20 : 10),
+                Text(
+                  "Dalam mencapai visi besar tersebut, management Beavers Basketball Club sadar betul harus melakukan banyak kolaborasi dengan berbagai pihak baik internal ataupun external. Internal contohnya dengan orang tua para pemain, dan pemain itu sendiri. External contohnya dengan pihak ketiga yang dapat membantu kelancaran dan dapat memberikan Value tambahan kepada Beavers Basketball Club.",
+                  textAlign: TextAlign.justify,
+                ),
+              ],
             ),
           ),
         ),
         SizedBox(
-          height: 30,
+          height: !isActionEnabled ? 24 : 48,
+        ),
+        Text(
+          "FOUNDER",
+          style: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.w800,
+          ),
+          textAlign: TextAlign.center,
+        ),
+        SizedBox(
+          height: !isActionEnabled ? 24 : 48,
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0)
+          padding: const EdgeInsets.symmetric(horizontal: 60.0)
               .copyWith(top: 8, bottom: 20),
-          child: Center(
-            child: Wrap(
-              alignment: WrapAlignment.center,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: [
-                CircleAvatar(
-                  radius: 80,
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                CircleAvatar(
-                  radius: 80,
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                CircleAvatar(
-                  radius: 80,
-                ),
-              ],
-            ),
-          ),
+          child: GridView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3, crossAxisSpacing: 60, mainAxisSpacing: 60),
+              itemBuilder: (context, index) {
+                return Column(
+                  children: [
+                    Expanded(
+                        child: Container(
+                      margin: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: BACKGROUND_CONTENT,
+                        border: Border.all(
+                          width: 4,
+                          color: NAVBAR,
+                        ),
+                      ),
+                    )),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 20),
+                      child: Text(
+                        "$index",
+                        style: GoogleFonts.inter(
+                          fontSize: 25,
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
+              itemCount: 3),
         ),
         FooterWidget(),
-        // SliverStickyHeader(
-        //   header: Container(
-        //     height: 40,
-        //     decoration: BoxDecoration(
-        //       color: Theme.of(context).primaryColor,
-        //       borderRadius: BorderRadius.circular(10),
-        //     ),
-        //     margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-        //     padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-        //     child: Align(
-        //       alignment: Alignment.centerLeft,
-        //       child: Text.rich(
-        //         TextSpan(
-        //             text: "/",
-        //             style: TextStyle(
-        //               fontSize: 20,
-        //             ),
-        //             children: ["history", "organisasi"]
-        //                 .take(ref.watch(currentIndexAboutProvider) + 1)
-        //                 .mapIndexed(
-        //                   (e, i, first, last) => TextSpan(
-        //                       text: "$i/",
-        //                       style: TextStyle(
-        //                           fontWeight: last ? FontWeight.w700 : null)),
-        //                 )
-        //                 .toList()),
-        //       ),
-        //     ),
-        //   ),
-        //   sticky: true,
-        //   sliver: SliverToBoxAdapter(
-        //     child: Column(
-        //       crossAxisAlignment: CrossAxisAlignment.start,
-        //       children: [
-        //         SubtitleWidget(label: "History"),
-        //         MeasureSize(
-        //           onChange: (size) {
-        //             ref
-        //                 .read(aboutPotitionProvider.notifier)
-        //                 .addValue(MapEntry("history", size.height));
-        //           },
-        //           child: Padding(
-        //             padding: const EdgeInsets.symmetric(horizontal: 10.0)
-        //                 .copyWith(top: 8),
-        //             child: Text("""
-        //         Perbasi didirikan pada tahun 1951, Komite Olimpiade Indonesia (KOI) untuk menyusun organisasi olahraga bola basket Indonesia. Atas prakarsa kedua tokoh ini, pada tanggal 23 Oktober 1951 dibentuklah organisasi bola basket Indonesia dengan nama Persatuan Basketball Seluruh Indonesia, disingkat Perbasi. Tony Wen menduduki jabatan ketua serta Wim Latumeten sebagai sekretaris. Tahun 1955 namanya diubah dan disesuaikan dengan perbendaharaan bahasa Indonesia, menjadi Persatuan Bola Basket Seluruh Indonesia dan tetap disingkat Perbasi.
-
-        //         Perbasi menganut sistem vertikal berjenjang, yang dimulai dari tingkat perkumpulan, pengurus cabang (pengcab) Perbasi, pengurus daerah (pengda) Perbasi, sampai kepada pengurus besar (PB) Perbasi. Dalam perjalanannya PB Perbasi telah beberapa kali berganti kepengurusan. Tercatat pengusaha muda Noviantika Nasution pernah menjabat sebagai Ketua Umum PB Perbasi masa jabatan 2006-2010, setelah sebelumnya jabatan Ketua Umum dipegang oleh Gubernur DKI, Sutiyoso.
-
-        //         Pada 2010 Ketua Umum PB Perbasi dipegang oleh mantan Kepala Badan Kebijakan Fiskal Kementerian Keuangan Republik Indonesia Anggito Abimanyu, setelah unggul 133 suara dari satu calon lainnya Azrul Ananda di Musyawarah Nasional Perbasi di Jakarta.[1]
-
-        //         Tahapan kongres yang molor membuat kongres baru bisa digelar 13-14 Maret 2015. Danny Kosasih terpilih dengan mengalahkan Azrul."""),
-        //           ),
-        //         ),
-        //         MeasureSize(
-        //           onChange: (size) {
-        //             ref
-        //                 .read(aboutPotitionProvider.notifier)
-        //                 .addValue(MapEntry("history", size.height));
-        //           },
-        //           child: Padding(
-        //             padding: const EdgeInsets.all(10.0),
-        //             child: Divider(
-        //               thickness: 2,
-        //             ),
-        //           ),
-        //         ),
-        //         SubtitleWidget(label: "Organisasi"),
-        //         MeasureSize(
-        //           onChange: (size) {
-        //             ref
-        //                 .read(aboutPotitionProvider.notifier)
-        //                 .addValue(MapEntry("organisasi", size.height));
-        //           },
-        // child: Padding(
-        //   padding: const EdgeInsets.symmetric(horizontal: 10.0)
-        //       .copyWith(top: 8, bottom: 20),
-        //   child: Center(
-        //     child: Wrap(
-        //       alignment: WrapAlignment.center,
-        //       crossAxisAlignment: WrapCrossAlignment.center,
-        //       children: [
-        //         CircleAvatar(
-        //           radius: 80,
-        //         ),
-        //         SizedBox(
-        //           width: 20,
-        //         ),
-        //         CircleAvatar(
-        //           radius: 80,
-        //         ),
-        //         SizedBox(
-        //           width: 20,
-        //         ),
-        //         CircleAvatar(
-        //           radius: 80,
-        //         ),
-        //       ],
-        //     ),
-        //   ),
-        // ),
-        //         ),
-        //         FooterWidget(),
-        //       ],
-        //     ),
-        //   ),
-        // ),
       ],
     );
-  }
-}
-
-class FooterWidget extends StatelessWidget {
-  const FooterWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final isActionEnabled = MediaQuery.of(context).size.width > 800;
-    return Container(
-      color: Theme.of(context).primaryColor,
-      padding: EdgeInsets.symmetric(vertical: 40, horizontal: 10),
-      child: DefaultTextStyle(
-        style: TextStyle(
-          color: Colors.white,
-        ),
-        child: (isActionEnabled)
-            ? Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: buildFooterChild(isActionEnabled)),
-                  if (isActionEnabled)
-                    Container(
-                      width: double.infinity,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 40,
-                          ),
-                          Text("Alamat"),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text("Raffles College - Kebon Jeruk"),
-                          Text("Jalan Arjuna Utara no. 35 Jakarta Barat."),
-                          Text("Sekolah Victory Plus Bekasi,"),
-                          SizedBox(
-                            height: 12,
-                          ),
-                          Text("Perumahan Kemang Pratama,"),
-                          Text("Jalan Citra Niaga Raya Bloc AO1-14,"),
-                          Text("Bojong Rawalumbu Kota Bekasi."),
-                        ],
-                      ),
-                    ),
-                ],
-              )
-            : Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: buildFooterChild(isActionEnabled),
-              ),
-      ),
-    );
-  }
-
-  buildFooterChild(bool isActionEnabled) {
-    int loadNum() => Random().nextInt(255);
-    return [
-      SizedBox(
-        width: isActionEnabled ? 10 : 0,
-        height: !isActionEnabled ? 10 : 0,
-      ),
-      if (!isActionEnabled) ...[
-        Text("Supported By"),
-        SizedBox(
-          height: 10,
-        ),
-        Row(
-          children: List.generate(
-              5,
-              (index) => Container(
-                    height: 45,
-                    width: 45,
-                    margin: EdgeInsets.only(right: 10),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color.fromRGBO(loadNum(), loadNum(), loadNum(), 1),
-                    ),
-                  )),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Text("Partnership With"),
-        SizedBox(
-          height: 10,
-        ),
-        Container(
-          height: 35,
-          color: Colors.white,
-          child: Image.asset(AssetConstant.iconBPJS),
-        ),
-      ] else ...[
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("Supported By"),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              children: List.generate(
-                  5,
-                  (index) => Container(
-                        height: 45,
-                        width: 45,
-                        margin: EdgeInsets.only(right: 10),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Color.fromRGBO(
-                              loadNum(), loadNum(), loadNum(), 1),
-                        ),
-                      )),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text("Partnership With"),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              height: 35,
-              color: Colors.white,
-              child: Image.asset(AssetConstant.iconBPJS),
-            ),
-          ],
-        )
-      ],
-      SizedBox(
-        width: isActionEnabled ? 20 : 0,
-        height: !isActionEnabled ? 40 : 0,
-      ),
-      if (!isActionEnabled) ...[
-        Text("Contact Us"),
-        SizedBox(
-          width: isActionEnabled ? 20 : 0,
-          height: !isActionEnabled ? 20 : 0,
-        ),
-      ],
-      if (isActionEnabled) ...[
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("Contact Us"),
-            SizedBox(
-              height: 15,
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    InkWell(
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 40,
-                            child: Image.asset(
-                              AssetConstant.iconIg,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 8,
-                          ),
-                          Text("beaversbasketball"),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          width: 40,
-                          child: Image.asset(AssetConstant.iconWa),
-                        ),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        Text("081296834488"),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          width: 42,
-                          height: 28,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                          ),
-                          child: Image.asset(
-                            AssetConstant.iconEmail,
-                            fit: BoxFit.fitWidth,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        Text("beaverbasketballid@gmail.com"),
-                      ],
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    InkWell(
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 40,
-                            child: Image.asset(
-                              AssetConstant.iconTokopedia,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 8,
-                          ),
-                          Text("beaversofficialstore"),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          width: 40,
-                          child: Image.asset(AssetConstant.iconYoutube),
-                        ),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        Text("Beavers Brave Official"),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ],
-        ),
-      ] else ...[
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            InkWell(
-              child: Row(
-                children: [
-                  Container(
-                    width: 40,
-                    child: Image.asset(
-                      AssetConstant.iconIg,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  Text("beaversbasketball"),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Row(
-              children: [
-                Container(
-                  width: 40,
-                  child: Image.asset(AssetConstant.iconWa),
-                ),
-                SizedBox(
-                  width: 8,
-                ),
-                Text("081296834488"),
-              ],
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Row(
-              children: [
-                Container(
-                  width: 42,
-                  height: 28,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                  ),
-                  child: Image.asset(
-                    AssetConstant.iconEmail,
-                    fit: BoxFit.fitWidth,
-                  ),
-                ),
-                SizedBox(
-                  width: 8,
-                ),
-                Text("beaverbasketballid@gmail.com"),
-              ],
-            ),
-          ],
-        ),
-        SizedBox(
-          width: isActionEnabled ? 20 : 0,
-          height: !isActionEnabled ? 20 : 0,
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            InkWell(
-              child: Row(
-                children: [
-                  Container(
-                    width: 40,
-                    child: Image.asset(
-                      AssetConstant.iconTokopedia,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  Text("beaversofficialstore"),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Row(
-              children: [
-                Container(
-                  width: 40,
-                  child: Image.asset(AssetConstant.iconYoutube),
-                ),
-                SizedBox(
-                  width: 8,
-                ),
-                Text("Beavers Brave Official"),
-              ],
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Text("Alamat"),
-            SizedBox(
-              height: 12,
-            ),
-            Text("Raffles College - Kebon Jeruk"),
-            Text("Jalan Arjuna Utara no. 35 Jakarta Barat."),
-            Text("Sekolah Victory Plus Bekasi,"),
-            SizedBox(
-              height: 12,
-            ),
-            Text("Perumahan Kemang Pratama,"),
-            Text("Jalan Citra Niaga Raya Bloc AO1-14,"),
-            Text("Bojong Rawalumbu Kota Bekasi."),
-          ],
-        ),
-      ],
-    ];
   }
 }
 

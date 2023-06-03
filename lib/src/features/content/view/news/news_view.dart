@@ -21,23 +21,27 @@ class NewsView extends HookConsumerWidget {
           height: 35,
         ),
         Container(
-          height: MediaQuery.of(context).size.height * 0.4,
+          height: MediaQuery.of(context).size.height * 0.3,
           margin: EdgeInsets.symmetric(horizontal: 40),
           width: double.infinity,
           color: Colors.green,
           child: Column(children: [
             Spacer(flex: 3),
             Container(
-                color: Colors.grey,
+                color: NAVBAR,
                 width: double.infinity,
-                padding: EdgeInsets.all(8),
+                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                        "Klub Basket Indonesia Muda Kembali Berlatih Ke Lapangan ABC Senayan"),
-                    Text(
-                        "Klub Basket Indonesia Muda Kembali Berlatih Ke Lapangan ABC Senayan"),
+                      "Klub Basket Indonesia Muda Kembali Berlatih Ke Lapangan ABC Senayan",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    Text("${DateTime.now()}"),
                   ],
                 )),
           ]),
@@ -59,17 +63,21 @@ class NewsView extends HookConsumerWidget {
         ListView.separated(
           itemBuilder: (context, index) {
             return Container(
-                color: Colors.grey,
+                color: NAVBAR,
                 margin: EdgeInsets.symmetric(horizontal: 40),
                 width: double.infinity,
-                padding: EdgeInsets.all(8),
+                padding: EdgeInsets.all(20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                        "Klub Basket Indonesia Muda Kembali Berlatih Ke Lapangan ABC Senayan"),
-                    Text(
-                        "Klub Basket Indonesia Muda Kembali Berlatih Ke Lapangan ABC Senayan"),
+                      "Klub Basket Indonesia Muda Kembali Berlatih Ke Lapangan ABC Senayan",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    Text("${DateTime.now()}"),
                   ],
                 ));
           },
@@ -83,7 +91,7 @@ class NewsView extends HookConsumerWidget {
           physics: NeverScrollableScrollPhysics(),
         ),
         SizedBox(
-          height: 35,
+          height: 65,
         ),
         FooterWidget(),
       ],

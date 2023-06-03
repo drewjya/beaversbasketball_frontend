@@ -20,7 +20,7 @@ class ContentView extends HookConsumerWidget {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         endDrawer: Drawer(
-          backgroundColor: Color(0xffEB1328),
+          backgroundColor: NAVBAR,
           child: CustomScrollView(
             slivers: [
               SliverFillRemaining(
@@ -107,13 +107,36 @@ class ContentView extends HookConsumerWidget {
         appBar: AppBar(
           automaticallyImplyLeading: false,
           toolbarHeight: 90,
-          title: InkWell(
+          title: GestureDetector(
             onTap: () {
               context.replaceNamed("home");
             },
-            child: Image.asset(AssetConstant.iconBorderBlack, height: 50),
+            child: FittedBox(
+              child: Row(
+                children: [
+                  Image.asset(AssetConstant.iconBorderBlack, height: 80),
+                  Text.rich(
+                    TextSpan(
+                      text: "BEAVERS BASKETBALL CLUB",
+                      style: TextStyle(
+                        fontFamily: "Demonized",
+                        fontSize: isActionEnabled ? 15 : 10,
+                      ),
+                      children: [
+                        TextSpan(
+                            text: "\nSTAY TOGETHER AND BE BRAVE",
+                            style: TextStyle(
+                              fontSize: isActionEnabled ? 10 : 7,
+                            )),
+                      ],
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
           ),
-          backgroundColor: Color(0xffEB1328),
+          backgroundColor: NAVBAR,
           actions: isActionEnabled
               ? [
                   NavigationItem(
