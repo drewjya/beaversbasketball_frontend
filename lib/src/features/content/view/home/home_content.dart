@@ -39,6 +39,12 @@ class HomeContent extends HookConsumerWidget {
       return;
     }, [ref.watch(youtubeDataProvider), focusNode]);
     final isActionEnabled = MediaQuery.of(context).size.width > 800;
+    final sponsor = [
+      AssetConstant.sponsor1,
+      AssetConstant.sponsor2,
+      AssetConstant.sponsor3,
+      AssetConstant.iconBPJS
+    ];
     return ref.watch(youtubeDataProvider).when(data: (data) {
       return SingleChildScrollView(
         child: Column(
@@ -53,19 +59,23 @@ class HomeContent extends HookConsumerWidget {
                     CarouselSlider(
                       carouselController: carouselController,
                       options: CarouselOptions(height: 400.0),
-                      items: [1, 2, 3, 4, 5].map((i) {
+                      items: [
+                        AssetConstant.carousel1,
+                        AssetConstant.carousel2,
+                        AssetConstant.carousel3,
+                      ].map((i) {
                         return Builder(
                           builder: (BuildContext context) {
                             return Container(
-                                width: MediaQuery.of(context).size.width,
-                                margin: EdgeInsets.symmetric(horizontal: 5.0),
-                                decoration: BoxDecoration(color: Colors.amber),
-                                child: Center(
-                                  child: Text(
-                                    'text $i',
-                                    style: TextStyle(fontSize: 16.0),
-                                  ),
-                                ));
+                              width: MediaQuery.of(context).size.width,
+                              margin: EdgeInsets.symmetric(horizontal: 5.0),
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: AssetImage(i),
+                                ),
+                              ),
+                            );
                           },
                         );
                       }).toList(),
@@ -76,6 +86,9 @@ class HomeContent extends HookConsumerWidget {
                           onPressed: () {
                             carouselController.previousPage();
                           },
+                          style: IconButton.styleFrom(
+                            backgroundColor: Colors.white,
+                          ),
                           icon: Icon(Icons.arrow_back_ios_new_rounded)),
                     ),
                     Align(
@@ -90,25 +103,14 @@ class HomeContent extends HookConsumerWidget {
                 ),
               ),
             ),
-            SizedBox(
-              height: !isActionEnabled ? 16 : 48,
-            ),
             Padding(
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
               child: Column(
                 children: [
-                  Text(
-                    "WELCOME",
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.w800,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(
-                    height: !isActionEnabled ? 24 : 48,
-                  ),
+                  TitlePage(text: "WELCOME"),
                   Container(
+                    width: MediaQuery.of(context).size.width *
+                        (isActionEnabled ? 0.7 : 1),
                     margin: EdgeInsets.symmetric(horizontal: 30),
                     padding: EdgeInsets.all(30),
                     decoration: BoxDecoration(
@@ -116,26 +118,15 @@ class HomeContent extends HookConsumerWidget {
                       border: Border.all(color: PRIMARY),
                     ),
                     child: Text(
-                      "Selamat datang di official website dari Beavers Basketball Club. Website ini dibuat supaya teman-teman semua bisa mengenal lebih dekat dengan Beavers Basketball Club. Jika teman-teman memiliki pertanyaan lebih lanjut silahkan hubungi admin Wa sesuai dengan lokasi latihan kalian. See You On Court BRAVER !",
-                      textAlign: TextAlign.justify,
+                      "Selamat datang di official website dari Beavers Basketball Club.\nWebsite ini dibuat supaya teman-teman semua bisa mengenal lebih dekat dengan Beavers Basketball Club. Jika teman-teman memiliki pertanyaan lebih lanjut silahkan hubungi admin Wa sesuai dengan lokasi latihan kalian.\nSee You On Court BRAVER!",
+                      textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 20,
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: !isActionEnabled ? 24 : 48,
-                  ),
-                  Text(
-                    "YOUTUBE",
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.w800,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(
-                    height: !isActionEnabled ? 16 : 48,
+                  TitlePage(
+                    text: "YOUTUBE",
                   ),
                   InkWell(
                     onTap: () {
@@ -182,73 +173,68 @@ class HomeContent extends HookConsumerWidget {
             SizedBox(
               height: !isActionEnabled ? 16 : 48,
             ),
-            GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                childAspectRatio: 1.2,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
-              ),
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              itemBuilder: (context, index) {
-                final youtube = data[index];
+            SizedBox(
+              width: MediaQuery.of(context).size.width *
+                  (!isActionEnabled ? 1 : 0.75),
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  childAspectRatio: 1.2,
+                  mainAxisSpacing: !isActionEnabled ? 10 : 40,
+                  crossAxisSpacing: !isActionEnabled ? 10 : 40,
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                itemBuilder: (context, index) {
+                  final youtube = data[index];
 
-                return Center(
-                  child: MeasureSize(
-                    onChange: (size) =>
-                        ref.read(sizeProvider.notifier).setSize(size),
-                    child: YoutubeCard(
-                      youtube: youtube,
-                      onTap: (p0) {
-                        isFocused.value = false;
-                        controller.loadVideoById(videoId: p0);
-                      },
+                  return Center(
+                    child: MeasureSize(
+                      onChange: (size) =>
+                          ref.read(sizeProvider.notifier).setSize(size),
+                      child: YoutubeCard(
+                        youtube: youtube,
+                        onTap: (p0) {
+                          isFocused.value = false;
+                          controller.loadVideoById(videoId: p0);
+                        },
+                      ),
                     ),
-                  ),
-                );
-              },
-              itemCount: (data).length,
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-            ),
-            SizedBox(
-              height: !isActionEnabled ? 24 : 48,
-            ),
-            Text(
-              "SUPPORTED BY",
-              style: TextStyle(
-                fontSize: 25,
-                fontWeight: FontWeight.w800,
+                  );
+                },
+                itemCount: (data).length,
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
               ),
-              textAlign: TextAlign.center,
             ),
+            TitlePage(text: "SUPPORTED BY"),
             SizedBox(
-              height: !isActionEnabled ? 24 : 48,
-            ),
-            GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                childAspectRatio: 1.2,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
-              ),
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              itemBuilder: (context, index) {
-                return Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: PRIMARY,
+              width: MediaQuery.of(context).size.width *
+                  (!isActionEnabled ? 1 : 0.75),
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  childAspectRatio: 1,
+                  mainAxisSpacing: !isActionEnabled ? 10 : 40,
+                  crossAxisSpacing: !isActionEnabled ? 10 : 40,
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                itemBuilder: (context, index) {
+                  return Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: PRIMARY,
+                      ),
+                      color: Colors.white,
+                      image: DecorationImage(
+                        image: AssetImage(sponsor[index]),
+                      ),
                     ),
-                    color: BACKGROUND_CONTENT,
-                  ),
-                  child: Center(
-                    child: Text("$index"),
-                  ),
-                );
-              },
-              itemCount: 6,
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+                  );
+                },
+                itemCount: sponsor.length,
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+              ),
             ),
             SizedBox(
               height: !isActionEnabled ? 24 : 48,
@@ -264,6 +250,37 @@ class HomeContent extends HookConsumerWidget {
         child: CircularProgressIndicator(),
       );
     });
+  }
+}
+
+class TitlePage extends StatelessWidget {
+  final String text;
+  const TitlePage({
+    Key? key,
+    required this.text,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final isActionEnabled = MediaQuery.of(context).size.width > 800;
+    return Column(
+      children: [
+        SizedBox(
+          height: !isActionEnabled ? 24 : 48,
+        ),
+        Text(
+          "$text",
+          style: TextStyle(
+            fontSize: 35,
+            fontWeight: FontWeight.w800,
+          ),
+          textAlign: TextAlign.center,
+        ),
+        SizedBox(
+          height: !isActionEnabled ? 24 : 48,
+        ),
+      ],
+    );
   }
 }
 

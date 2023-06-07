@@ -6,61 +6,57 @@ class CoachView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final listCoach = [
-      "Coach Andi",
-      "Coach Intan",
-      "Coach Doddy",
-      "Coach Ary Chandra",
-      "Coach Aklili",
-      "Coach Tika",
-      "Coach Lidya",
-      "Coach Randy",
-      "Coach Vandy",
-      "Coach Fernando",
-      "Coach Hendra",
-    ];
+    final listCoach = {
+      "Coach Ary Chandra": AssetConstant.coachAry,
+      "Coach Hendra Su": AssetConstant.coachHendra,
+      "Coach Vandy Susanto": AssetConstant.coachVandy,
+      "Coach Lidya": AssetConstant.coachLidya,
+      "Coach Asdila Arruna": AssetConstant.coachAsdila,
+      "Coach Athini Mardlatika": AssetConstant.coachAthini,
+    };
     final isActionEnabled = MediaQuery.of(context).size.width > 800;
     return ListView(
       children: [
-        SizedBox(
-          height: !isActionEnabled ? 24 : 48,
-        ),
-        Text(
-          "COACH",
-          style: TextStyle(
-            fontSize: 25,
-            fontWeight: FontWeight.w800,
-          ),
-          textAlign: TextAlign.center,
-        ),
-        SizedBox(
-          height: !isActionEnabled ? 24 : 48,
-        ),
+        TitlePage(text: "COACH"),
         Padding(
           padding: const EdgeInsets.all(30),
           child: GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3, crossAxisSpacing: 60, mainAxisSpacing: 60),
+              crossAxisCount: 3,
+              crossAxisSpacing: isActionEnabled ? 60 : 5,
+              mainAxisSpacing: isActionEnabled ? 60 : 5,
+              childAspectRatio: 0.8,
+            ),
             itemBuilder: (context, index) {
               return Column(
                 children: [
                   Expanded(
                       child: Container(
-                    margin: EdgeInsets.all(10),
+                    margin: EdgeInsets.all(isActionEnabled ? 20 : 5),
                     decoration: BoxDecoration(
-                      color: BACKGROUND_CONTENT,
+                      color: listCoach.entries.elementAt(index).value.isNotEmpty
+                          ? null
+                          : BACKGROUND_CONTENT,
+                      image: listCoach.entries.elementAt(index).value.isNotEmpty
+                          ? DecorationImage(
+                              image: AssetImage(
+                                  listCoach.entries.elementAt(index).value),
+                              fit: BoxFit.cover,
+                            )
+                          : null,
                       border: Border.all(
-                        width: 4,
+                        width: isActionEnabled ? 4 : 2,
                         color: NAVBAR,
                       ),
                     ),
                   )),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 20),
+                  Container(
+                    height: isActionEnabled ? 125 : 85,
                     child: Text(
-                      listCoach[index],
+                      listCoach.entries.elementAt(index).key,
+                      textAlign: TextAlign.center,
                       style: GoogleFonts.inter(
-                        fontSize: 25,
+                        fontSize: isActionEnabled ? 25 : 10,
                       ),
                     ),
                   ),

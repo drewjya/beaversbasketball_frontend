@@ -26,6 +26,12 @@ Page<dynamic> Function(BuildContext, GoRouterState) defaultPageBuilder<T>(
 
 class RouteApp {
   static GoRouter route = GoRouter(
+    errorBuilder: (context, state) {
+      
+      return ContentView(
+        filter: NavbarFilter.home,
+      );
+    },
     routes: <RouteBase>[
       GoRoute(
         path: '/',

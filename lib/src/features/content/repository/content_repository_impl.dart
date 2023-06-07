@@ -1,7 +1,7 @@
 import 'package:beaverbasketball/src/src.dart';
 
-const _apiKey2 = "AIzaSyBYnhuaSpaPXeakbujqOqNIAuKsSNB49Vo";
-const _apiKey1 = "AIzaSyAUo0xmh0jiQffKxa8mK6fhxJBXX3uenJw";
+const _apiKey1 = "AIzaSyBYnhuaSpaPXeakbujqOqNIAuKsSNB49Vo";
+const _apiKey2 = "AIzaSyAUo0xmh0jiQffKxa8mK6fhxJBXX3uenJw";
 
 //AIzaSyAUo0xmh0jiQffKxa8mK6fhxJBXX3uenJw
 class ContentRepositoryImpl extends ContentRepository {

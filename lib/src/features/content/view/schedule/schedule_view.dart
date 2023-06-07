@@ -7,20 +7,7 @@ class ScheduleView extends HookConsumerWidget {
     final isActionEnabled = MediaQuery.of(context).size.width > 800;
     return ListView(
       children: [
-        SizedBox(
-          height: !isActionEnabled ? 24 : 48,
-        ),
-        Text(
-          "JADWAL RUTIN",
-          style: TextStyle(
-            fontSize: 25,
-            fontWeight: FontWeight.w800,
-          ),
-          textAlign: TextAlign.center,
-        ),
-        SizedBox(
-          height: !isActionEnabled ? 24 : 48,
-        ),
+        TitlePage(text: "JADWAL RUTIN"),
         ...List.generate(
           2,
           (index) => Container(
@@ -41,7 +28,7 @@ class ScheduleView extends HookConsumerWidget {
                     ),
                   ),
                 ),
-                ...["16.00 - 18.00", "19.00 - 20.00"].map(
+                ...["16.00 - 18.00", "18.00 - 20.00"].map(
                   (value) => Container(
                     padding: EdgeInsets.all(10),
                     margin: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
@@ -83,20 +70,7 @@ RC 3 = Toddler + KU 10 Mix
             ),
           ),
         ),
-        SizedBox(
-          height: !isActionEnabled ? 24 : 48,
-        ),
-        SizedBox(
-          height: !isActionEnabled ? 24 : 48,
-        ),
-        Text(
-          "EVENTS",
-          style: TextStyle(
-            fontSize: 25,
-            fontWeight: FontWeight.w800,
-          ),
-          textAlign: TextAlign.center,
-        ),
+        TitlePage(text: "EVENTS"),
         Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
@@ -114,9 +88,6 @@ RC 3 = Toddler + KU 10 Mix
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 20,
               ),
               Container(
                 padding: EdgeInsets.all(10),

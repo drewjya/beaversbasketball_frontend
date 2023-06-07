@@ -26,26 +26,19 @@ class AboutContent extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
+    final organisation = {
+      "Rizki Adventus": {"image": AssetConstant.founder1, "title": "Founder"},
+      "Salim Nurjadin": {"image": "", "title": "Program Manager"},
+      "Abizalt": {"image": "", "title": "Technical Director"}
+    };
+
     final isActionEnabled = MediaQuery.of(context).size.width > 800;
     return ListView(
       children: [
-        SizedBox(
-          height: !isActionEnabled ? 24 : 48,
-        ),
-        Text(
-          "HISTORY",
-          style: TextStyle(
-            fontSize: 25,
-            fontWeight: FontWeight.w800,
-          ),
-          textAlign: TextAlign.center,
-        ),
-        SizedBox(
-          height: !isActionEnabled ? 24 : 48,
-        ),
+        TitlePage(text: "HISTORY"),
         Container(
           margin: EdgeInsets.symmetric(horizontal: isActionEnabled ? 50 : 20),
-          padding: EdgeInsets.all(50),
+          padding: EdgeInsets.all(isActionEnabled ? 50 : 20),
           decoration: BoxDecoration(
             color: BACKGROUND_CONTENT,
             border: Border.all(
@@ -56,7 +49,7 @@ class AboutContent extends HookConsumerWidget {
           ),
           child: DefaultTextStyle(
             style: TextStyle(
-              fontSize: isActionEnabled ? 25 : 15,
+              fontSize: isActionEnabled ? 25 : 12,
               color: Colors.white,
             ),
             child: Column(
@@ -99,55 +92,71 @@ class AboutContent extends HookConsumerWidget {
             ),
           ),
         ),
-        SizedBox(
-          height: !isActionEnabled ? 24 : 48,
-        ),
-        Text(
-          "FOUNDER",
-          style: TextStyle(
-            fontSize: 25,
-            fontWeight: FontWeight.w800,
-          ),
-          textAlign: TextAlign.center,
-        ),
-        SizedBox(
-          height: !isActionEnabled ? 24 : 48,
-        ),
+        TitlePage(text: "FOUNDER"),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 60.0)
               .copyWith(top: 8, bottom: 20),
-          child: GridView.builder(
-              physics: NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3, crossAxisSpacing: 60, mainAxisSpacing: 60),
-              itemBuilder: (context, index) {
-                return Column(
-                  children: [
-                    Expanded(
-                        child: Container(
-                      margin: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: BACKGROUND_CONTENT,
-                        border: Border.all(
-                          width: 4,
-                          color: NAVBAR,
+          child: GridView(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            gridDelegate:
+                SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+            children: organisation
+                .map(
+                  (key, value) => MapEntry(
+                    key,
+                    Column(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: BACKGROUND_CONTENT,
+                            border: Border.all(
+                              width: 4,
+                              color: NAVBAR,
+                            ),
+                          ),
+                          child: (value["image"] == null ||
+                                  value["image"]!.isEmpty)
+                              ? SizedBox.fromSize(
+                                  size: ref.watch(sizeProvider),
+                                )
+                              : MeasureSize(
+                                  onChange: (size) {
+                                    ref
+                                        .read(sizeProvider.notifier)
+                                        .setSize(size);
+                                  },
+                                  child: Image.asset(value["image"]!)),
                         ),
-                      ),
-                    )),
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 20),
-                      child: Text(
-                        "$index",
-                        style: GoogleFonts.inter(
-                          fontSize: 25,
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: isActionEnabled ? 20 : 5),
+                          child: Column(
+                            children: [
+                              Text(
+                                "$key",
+                                style: GoogleFonts.inter(
+                                  fontSize: isActionEnabled ? 25 : 16,
+                                ),
+                              ),
+                              Text(
+                                "${value["title"]!}",
+                                style: GoogleFonts.inter(
+                                  fontSize: isActionEnabled ? 17 : 12,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
-                );
-              },
-              itemCount: 3),
+                  ),
+                )
+                .values
+                .toList(),
+          ),
         ),
         FooterWidget(),
       ],

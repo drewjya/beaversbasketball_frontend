@@ -1,9 +1,11 @@
-import 'package:beaverbasketball/src/src.dart';
+import 'package:flutter/material.dart';
 
 export 'core/common/constant/asset.dart';
 export 'core/common/constant/enum.dart';
 export 'core/common/widget/footer_content.dart';
 export 'core/common/widget/measure_size.dart';
+export 'core/core.dart';
+export 'core/extension/extensions.dart';
 export 'core/http/http_wrapper.dart';
 export 'core/routes/route.dart';
 export 'export.dart';
@@ -27,11 +29,12 @@ export 'features/content/view/content_view.dart';
 export 'features/content/view/gallery/gallery_view.dart';
 export 'features/content/view/home/home_content.dart';
 export 'features/content/view/news/news_view.dart';
+export 'features/content/view/registration/login_view.dart';
+export 'features/content/view/registration/registration_view.dart';
 export 'features/content/view/schedule/schedule_view.dart';
 export 'features/content/widget/content_body.dart';
 export 'features/content/widget/content_widget.dart';
 export 'features/features.dart';
-
 const PRIMARY = Color(0xffEB1328);
 const NAVBAR = Color(0xff960D18);
 const BACKGROUND_CONTENT = Color(0xff1E1E1E);

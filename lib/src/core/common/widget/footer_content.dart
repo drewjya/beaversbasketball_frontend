@@ -1,6 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:math';
-
 import 'package:beaverbasketball/src/src.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,6 +12,12 @@ class FooterWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isActionEnabled = MediaQuery.of(context).size.width > 800;
+    final sponsor = [
+      AssetConstant.sponsor1,
+      AssetConstant.sponsor2,
+      AssetConstant.sponsor3,
+      AssetConstant.iconBPJS
+    ];
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -35,12 +39,21 @@ class FooterWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _TitleFooter(text: "ADDRESS"),
-              Text("Raffles College - Kebon Jeruk"),
-              Text("Jalan Arjuna Utara no. 35 Jakarta Barat."),
-              Text("Sekolah Victory Plus Bekasi,"),
-              Text("Perumahan Kemang Pratama,"),
-              Text("Jalan Citra Niaga Raya Bloc AO1-14,"),
-              Text("Bojong Rawalumbu Kota Bekasi."),
+              "Raffles College - Kebon Jeruk".toWidget(),
+              "Jalan Arjuna Utara no. 35 Jakarta Barat.".toWidget(),
+              SizedBox(
+                height: 10,
+              ),
+              "Sekolah Victory Plus Bekasi,".toWidget(),
+              "Perumahan Kemang Pratama,".toWidget(),
+              "Jalan Citra Niaga Raya Bloc AO1-14,".toWidget(),
+              "Bojong Rawalumbu Kota Bekasi.".toWidget(),
+              SizedBox(
+                height: 10,
+              ),
+              "Bintang Sport Center Bekasi ".toWidget(),
+              "Jl. Raya Mustikasari No.109, RT.004/RW.001, Mustikasari, Kec. Mustika Jaya, Kota Bks, Jawa Barat 17116"
+                  .toWidget(),
               SizedBox(
                 height: 20,
               ),
@@ -88,25 +101,6 @@ class FooterWidget extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () async {
-                  if (await canLaunchUrlString("https://wa.me/6281296834488")) {
-                    launchUrlString("https://wa.me/6281296834488");
-                  }
-                },
-                child: Row(
-                  children: [
-                    Image.asset(AssetConstant.iconWa, width: 24),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Text("081296834488"),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              GestureDetector(
-                onTap: () async {
                   if (await canLaunchUrlString(
                       "https://www.instagram.com/beaversbasketball")) {
                     launchUrlString(
@@ -120,6 +114,27 @@ class FooterWidget extends StatelessWidget {
                       width: 5,
                     ),
                     Text("beaversbasketball"),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              GestureDetector(
+                onTap: () async {
+                  if (await canLaunchUrlString(
+                      "https://www.tokopedia.com/beaversofficialstore")) {
+                    launchUrlString(
+                        "https://www.tokopedia.com/beaversofficialstore");
+                  }
+                },
+                child: Row(
+                  children: [
+                    Image.asset(AssetConstant.iconTokopedia, width: 24),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text("beaversofficialstore"),
                   ],
                 ),
               ),
@@ -153,19 +168,36 @@ class FooterWidget extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () async {
-                  if (await canLaunchUrlString(
-                      "https://www.tokopedia.com/beaversofficialstore")) {
-                    launchUrlString(
-                        "https://www.tokopedia.com/beaversofficialstore");
+                  if (await canLaunchUrlString("https://wa.me/6281296834488")) {
+                    launchUrlString("https://wa.me/6281296834488");
                   }
                 },
                 child: Row(
                   children: [
-                    Image.asset(AssetConstant.iconTokopedia, width: 24),
+                    Image.asset(AssetConstant.iconWa, width: 22),
                     SizedBox(
                       width: 5,
                     ),
-                    Text("beaversofficialstore"),
+                    Text("Admin Jakarta - 081296834488"),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              GestureDetector(
+                onTap: () async {
+                  if (await canLaunchUrlString("https://wa.me/6281211997790")) {
+                    launchUrlString("https://wa.me/6281211997790");
+                  }
+                },
+                child: Row(
+                  children: [
+                    Image.asset(AssetConstant.iconWa, width: 22),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text("Admin Bekasi -  081211997790"),
                   ],
                 ),
               ),
@@ -173,38 +205,35 @@ class FooterWidget extends StatelessWidget {
                 height: 20,
               ),
               _TitleFooter(
-                text: "SUPPORTED By",
+                text: "SUPPORTED BY",
               ),
               SizedBox(
                 height: 20,
               ),
-              Center(
-                child: Wrap(
-                  alignment: WrapAlignment.center,
-                  runAlignment: WrapAlignment.center,
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  spacing: 40,
-                  runSpacing: 40,
-                  children: List.generate(
-                      10,
-                      (index) => CircleAvatar(
-                            radius: 80,
-                          )),
+              GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 5,
+                  childAspectRatio: 1,
+                  mainAxisSpacing: 30,
+                  crossAxisSpacing: 30,
                 ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              _TitleFooter(
-                text: "PARTNERSHIP WITH",
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                height: 35,
-                color: Colors.white,
-                child: Image.asset(AssetConstant.iconBPJS),
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                itemBuilder: (context, index) {
+                  return Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: PRIMARY,
+                      ),
+                      color: Colors.white,
+                      image: DecorationImage(
+                        image: AssetImage(sponsor[index]),
+                      ),
+                    ),
+                  );
+                },
+                itemCount: sponsor.length,
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
               ),
               SizedBox(
                 height: 20,
@@ -230,12 +259,21 @@ class FooterWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         _TitleFooter(text: "ADDRESS"),
-                        Text("Raffles College - Kebon Jeruk"),
-                        Text("Jalan Arjuna Utara no. 35 Jakarta Barat."),
-                        Text("Sekolah Victory Plus Bekasi,"),
-                        Text("Perumahan Kemang Pratama,"),
-                        Text("Jalan Citra Niaga Raya Bloc AO1-14,"),
-                        Text("Bojong Rawalumbu Kota Bekasi."),
+                        "Raffles College - Kebon Jeruk".toWidget(),
+                        "Jalan Arjuna Utara no. 35 Jakarta Barat.".toWidget(),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        "Sekolah Victory Plus Bekasi,".toWidget(),
+                        "Perumahan Kemang Pratama,".toWidget(),
+                        "Jalan Citra Niaga Raya Bloc AO1-14,".toWidget(),
+                        "Bojong Rawalumbu Kota Bekasi.".toWidget(),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        "Bintang Sport Center Bekasi ".toWidget(),
+                        "Jl. Raya Mustikasari No.109, RT.004/RW.001, Mustikasari, Kec. Mustika Jaya, Kota Bks, Jawa Barat 17116"
+                            .toWidget(),
                       ],
                     ),
                   ),
@@ -308,26 +346,6 @@ class FooterWidget extends StatelessWidget {
                         GestureDetector(
                           onTap: () async {
                             if (await canLaunchUrlString(
-                                "https://wa.me/6281296834488")) {
-                              launchUrlString("https://wa.me/6281296834488");
-                            }
-                          },
-                          child: Row(
-                            children: [
-                              Image.asset(AssetConstant.iconWa, width: 24),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text("081296834488"),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        GestureDetector(
-                          onTap: () async {
-                            if (await canLaunchUrlString(
                                 "https://www.instagram.com/beaversbasketball")) {
                               launchUrlString(
                                   "https://www.instagram.com/beaversbasketball");
@@ -340,6 +358,28 @@ class FooterWidget extends StatelessWidget {
                                 width: 5,
                               ),
                               Text("beaversbasketball"),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        GestureDetector(
+                          onTap: () async {
+                            if (await canLaunchUrlString(
+                                "https://www.tokopedia.com/beaversofficialstore")) {
+                              launchUrlString(
+                                  "https://www.tokopedia.com/beaversofficialstore");
+                            }
+                          },
+                          child: Row(
+                            children: [
+                              Image.asset(AssetConstant.iconTokopedia,
+                                  width: 24),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text("beaversofficialstore"),
                             ],
                           ),
                         ),
@@ -374,19 +414,37 @@ class FooterWidget extends StatelessWidget {
                         GestureDetector(
                           onTap: () async {
                             if (await canLaunchUrlString(
-                                "https://www.tokopedia.com/beaversofficialstore")) {
-                              launchUrlString(
-                                  "https://www.tokopedia.com/beaversofficialstore");
+                                "https://wa.me/6281296834488")) {
+                              launchUrlString("https://wa.me/6281296834488");
                             }
                           },
                           child: Row(
                             children: [
-                              Image.asset(AssetConstant.iconTokopedia,
-                                  width: 24),
+                              Image.asset(AssetConstant.iconWa, width: 22),
                               SizedBox(
                                 width: 5,
                               ),
-                              Text("beaversofficialstore"),
+                              Text("Admin Jakarta - 081296834488"),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        GestureDetector(
+                          onTap: () async {
+                            if (await canLaunchUrlString(
+                                "https://wa.me/6281211997790")) {
+                              launchUrlString("https://wa.me/6281211997790");
+                            }
+                          },
+                          child: Row(
+                            children: [
+                              Image.asset(AssetConstant.iconWa, width: 22),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text("Admin Bekasi -  081211997790"),
                             ],
                           ),
                         ),
@@ -398,58 +456,58 @@ class FooterWidget extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-
               _TitleFooter(
-                text: "SUPPORTED By",
+                text: "SUPPORTED BY",
               ),
               SizedBox(
                 height: 20,
               ),
-              Center(
-                child: Wrap(
-                  alignment: WrapAlignment.center,
-                  runAlignment: WrapAlignment.center,
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  spacing: 40,
-                  runSpacing: 40,
-                  children: List.generate(
-                      10,
-                      (index) => CircleAvatar(
-                            radius: 80,
-                          )),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-
-              _TitleFooter(
-                text: "PARTNERSHIP WITH",
-              ),
-              SizedBox(
-                height: 20,
-              ),
-
               Container(
-                height: 35,
-                color: Colors.white,
-                child: Image.asset(AssetConstant.iconBPJS),
+                width: MediaQuery.of(context).size.width * 0.75,
+                child: sponsor.length < 5
+                    ? Wrap(
+                        spacing: 30,
+                        runSpacing: 30,
+                        alignment: WrapAlignment.center,
+                        children: sponsor
+                            .map((e) => Container(
+                                  width: 150,
+                                  height: 150,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: PRIMARY,
+                                    ),
+                                    color: Colors.white,
+                                    image: DecorationImage(
+                                      image: AssetImage(e),
+                                    ),
+                                  ),
+                                ))
+                            .toList(),
+                      )
+                    : GridView.count(
+                        crossAxisCount: 5,
+                        childAspectRatio: 1,
+                        mainAxisSpacing: 30,
+                        crossAxisSpacing: 30,
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        children: sponsor
+                            .map((e) => Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: PRIMARY,
+                                    ),
+                                    color: Colors.white,
+                                    image: DecorationImage(
+                                      image: AssetImage(e),
+                                    ),
+                                  ),
+                                ))
+                            .toList(),
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                      ),
               ),
-              SizedBox(
-                height: 20,
-              ),
-
-              // GridView.builder(
-              //   shrinkWrap: true,
-              //   physics: NeverScrollableScrollPhysics(),
-              //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              //       crossAxisCount: 5,
-              //       crossAxisSpacing: 40,
-              //       mainAxisSpacing: 40),
-              //   itemBuilder: (context, index) {
-              //     return CircleAvatar();
-              //   },
-              // ),
               SizedBox(
                 height: 20,
               ),
@@ -464,366 +522,6 @@ class FooterWidget extends StatelessWidget {
         ),
       ),
     );
-  }
-
-// (isActionEnabled)
-//             ? Column(
-//                 mainAxisAlignment: MainAxisAlignment.center,
-//                 children: [
-//                   Row(
-//                       crossAxisAlignment: CrossAxisAlignment.start,
-//                       children: buildFooterChild(isActionEnabled)),
-//                   if (isActionEnabled)
-//                     Container(
-//                       width: double.infinity,
-//                       child: Column(
-//                         crossAxisAlignment: CrossAxisAlignment.start,
-//                         mainAxisAlignment: MainAxisAlignment.start,
-//                         children: [
-//                           SizedBox(
-//                             height: 40,
-//                           ),
-//                           Text("Alamat"),
-//                           SizedBox(
-//                             height: 10,
-//                           ),
-//                           Text("Raffles College - Kebon Jeruk"),
-//                           Text("Jalan Arjuna Utara no. 35 Jakarta Barat."),
-//                           Text("Sekolah Victory Plus Bekasi,"),
-//                           SizedBox(
-//                             height: 12,
-//                           ),
-//                           Text("Perumahan Kemang Pratama,"),
-//                           Text("Jalan Citra Niaga Raya Bloc AO1-14,"),
-//                           Text("Bojong Rawalumbu Kota Bekasi."),
-//                         ],
-//                       ),
-//                     ),
-//                 ],
-//               )
-//             : Column(
-//                 crossAxisAlignment: CrossAxisAlignment.start,
-//                 children: buildFooterChild(isActionEnabled),
-//               ),
-  buildFooterChild(bool isActionEnabled) {
-    int loadNum() => Random().nextInt(255);
-    return [
-      SizedBox(
-        width: isActionEnabled ? 10 : 0,
-        height: !isActionEnabled ? 10 : 0,
-      ),
-      if (!isActionEnabled) ...[
-        Text("Supported By"),
-        SizedBox(
-          height: 10,
-        ),
-        Row(
-          children: List.generate(
-              5,
-              (index) => Container(
-                    height: 45,
-                    width: 45,
-                    margin: EdgeInsets.only(right: 10),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color.fromRGBO(loadNum(), loadNum(), loadNum(), 1),
-                    ),
-                  )),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Text("Partnership With"),
-        SizedBox(
-          height: 10,
-        ),
-        Container(
-          height: 35,
-          color: Colors.white,
-          child: Image.asset(AssetConstant.iconBPJS),
-        ),
-      ] else ...[
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("Supported By"),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              children: List.generate(
-                  5,
-                  (index) => Container(
-                        height: 45,
-                        width: 45,
-                        margin: EdgeInsets.only(right: 10),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Color.fromRGBO(
-                              loadNum(), loadNum(), loadNum(), 1),
-                        ),
-                      )),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text("Partnership With"),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              height: 35,
-              color: Colors.white,
-              child: Image.asset(AssetConstant.iconBPJS),
-            ),
-          ],
-        )
-      ],
-      SizedBox(
-        width: isActionEnabled ? 20 : 0,
-        height: !isActionEnabled ? 40 : 0,
-      ),
-      if (!isActionEnabled) ...[
-        Text("Contact Us"),
-        SizedBox(
-          width: isActionEnabled ? 20 : 0,
-          height: !isActionEnabled ? 20 : 0,
-        ),
-      ],
-      if (isActionEnabled) ...[
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("Contact Us"),
-            SizedBox(
-              height: 15,
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    InkWell(
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 40,
-                            child: Image.asset(
-                              AssetConstant.iconIg,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 8,
-                          ),
-                          Text("beaversbasketball"),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          width: 40,
-                          child: Image.asset(AssetConstant.iconWa),
-                        ),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        Text("081296834488"),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          width: 42,
-                          height: 28,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                          ),
-                          child: Image.asset(
-                            AssetConstant.iconEmail,
-                            fit: BoxFit.fitWidth,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        Text("beaverbasketballid@gmail.com"),
-                      ],
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    InkWell(
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 40,
-                            child: Image.asset(
-                              AssetConstant.iconTokopedia,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 8,
-                          ),
-                          Text("beaversofficialstore"),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    GestureDetector(
-                      onTap: () async {},
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 40,
-                            child: Image.asset(AssetConstant.iconYoutube),
-                          ),
-                          SizedBox(
-                            width: 8,
-                          ),
-                          Text("Beavers Brave Official"),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ],
-        ),
-      ] else ...[
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            InkWell(
-              child: Row(
-                children: [
-                  Container(
-                    width: 40,
-                    child: Image.asset(
-                      AssetConstant.iconIg,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  Text("beaversbasketball"),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Row(
-              children: [
-                Container(
-                  width: 40,
-                  child: Image.asset(AssetConstant.iconWa),
-                ),
-                SizedBox(
-                  width: 8,
-                ),
-                Text("081296834488"),
-              ],
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Row(
-              children: [
-                Container(
-                  width: 42,
-                  height: 28,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                  ),
-                  child: Image.asset(
-                    AssetConstant.iconEmail,
-                    fit: BoxFit.fitWidth,
-                  ),
-                ),
-                SizedBox(
-                  width: 8,
-                ),
-                Text("beaverbasketballid@gmail.com"),
-              ],
-            ),
-          ],
-        ),
-        SizedBox(
-          width: isActionEnabled ? 20 : 0,
-          height: !isActionEnabled ? 20 : 0,
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            InkWell(
-              child: Row(
-                children: [
-                  Container(
-                    width: 40,
-                    child: Image.asset(
-                      AssetConstant.iconTokopedia,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  Text("beaversofficialstore"),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Row(
-              children: [
-                Container(
-                  width: 40,
-                  child: Image.asset(AssetConstant.iconYoutube),
-                ),
-                SizedBox(
-                  width: 8,
-                ),
-                Text("Beavers Brave Official"),
-              ],
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Text("Alamat"),
-            SizedBox(
-              height: 12,
-            ),
-            Text("Raffles College - Kebon Jeruk"),
-            Text("Jalan Arjuna Utara no. 35 Jakarta Barat."),
-            Text("Sekolah Victory Plus Bekasi,"),
-            SizedBox(
-              height: 12,
-            ),
-            Text("Perumahan Kemang Pratama,"),
-            Text("Jalan Citra Niaga Raya Bloc AO1-14,"),
-            Text("Bojong Rawalumbu Kota Bekasi."),
-          ],
-        ),
-      ],
-    ];
   }
 }
 

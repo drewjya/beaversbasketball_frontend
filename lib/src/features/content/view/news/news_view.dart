@@ -4,29 +4,31 @@ class NewsView extends HookConsumerWidget {
   const NewsView({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isActionEnabled = MediaQuery.of(context).size.width > 800;
+    final titleStyle = TextStyle(
+      fontSize: isActionEnabled ? 20 : 12,
+      fontWeight: FontWeight.w700,
+    );
+    final bodyStyle = TextStyle(
+      fontSize: isActionEnabled ? 18 : 10,
+    );
     return ListView(
       children: [
-        SizedBox(
-          height: 15,
-        ),
-        Center(
-          child: Text(
-            "HEADLINE NEWS",
-            style: TextStyle(
-              fontSize: 30,
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 35,
-        ),
+        TitlePage(text: "HEADLINE NEWS"),
         Container(
-          height: MediaQuery.of(context).size.height * 0.3,
+          height: MediaQuery.of(context).size.height * (0.5),
           margin: EdgeInsets.symmetric(horizontal: 40),
-          width: double.infinity,
-          color: Colors.green,
+          width: MediaQuery.of(context).size.height * (0.7),
           child: Column(children: [
-            Spacer(flex: 3),
+            Expanded(
+              child: Container(
+                width: double.infinity,
+                child: Image.asset(
+                  AssetConstant.carousel1,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
             Container(
                 color: NAVBAR,
                 width: double.infinity,
@@ -36,48 +38,35 @@ class NewsView extends HookConsumerWidget {
                   children: [
                     Text(
                       "Klub Basket Indonesia Muda Kembali Berlatih Ke Lapangan ABC Senayan",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                      ),
+                      style: titleStyle,
                     ),
-                    Text("${DateTime.now()}"),
+                    Text(
+                      "${DateTime.now()}",
+                      style: bodyStyle,
+                    ),
                   ],
                 )),
           ]),
         ),
-        SizedBox(
-          height: 15,
-        ),
-        Center(
-          child: Text(
-            "MORE NEWS",
-            style: TextStyle(
-              fontSize: 30,
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 15,
-        ),
+        TitlePage(text: "MORE NEWS"),
         ListView.separated(
           itemBuilder: (context, index) {
             return Container(
                 color: NAVBAR,
                 margin: EdgeInsets.symmetric(horizontal: 40),
-                width: double.infinity,
+                width: MediaQuery.of(context).size.height * (0.7),
                 padding: EdgeInsets.all(20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       "Klub Basket Indonesia Muda Kembali Berlatih Ke Lapangan ABC Senayan",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                      ),
+                      style: titleStyle,
                     ),
-                    Text("${DateTime.now()}"),
+                    Text(
+                      "${DateTime.now()}",
+                      style: bodyStyle,
+                    ),
                   ],
                 ));
           },
