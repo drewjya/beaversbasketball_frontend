@@ -5,6 +5,17 @@ class GalleryView extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isActionEnabled = MediaQuery.of(context).size.width > 800;
+    final user = ref.watch(authProvider).value;
+    if (user != null) {
+      return SingleChildScrollView(
+        child: Column(
+          children: [
+            TitlePage(text: "GALLERY"),
+            FooterWidget(),
+          ],
+        ),
+      );
+    }
     return ListView(
       children: [
         TitlePage(text: "GALLERY"),

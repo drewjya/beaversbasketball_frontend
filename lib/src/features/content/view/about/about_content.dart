@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
+import 'package:beaverbasketball/src/features/content/view/about/organizational_content.dart';
 import 'package:beaverbasketball/src/src.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 scrollLoggerListener(ScrollController controller, WidgetRef ref) {
   if (controller.hasClients) {
@@ -26,11 +26,7 @@ class AboutContent extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    final organisation = {
-      "Rizki Adventus": {"image": AssetConstant.founder1, "title": "Founder"},
-      "Salim Nurjadin": {"image": "", "title": "Program Manager"},
-      "Abizalt": {"image": "", "title": "Technical Director"}
-    };
+ 
 
     final isActionEnabled = MediaQuery.of(context).size.width > 800;
     return ListView(
@@ -96,66 +92,60 @@ class AboutContent extends HookConsumerWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 60.0)
               .copyWith(top: 8, bottom: 20),
-          child: GridView(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            gridDelegate:
-                SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-            children: organisation
-                .map(
-                  (key, value) => MapEntry(
-                    key,
-                    Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: BACKGROUND_CONTENT,
-                            border: Border.all(
-                              width: 4,
-                              color: NAVBAR,
-                            ),
-                          ),
-                          child: (value["image"] == null ||
-                                  value["image"]!.isEmpty)
-                              ? SizedBox.fromSize(
-                                  size: ref.watch(sizeProvider),
-                                )
-                              : MeasureSize(
-                                  onChange: (size) {
-                                    ref
-                                        .read(sizeProvider.notifier)
-                                        .setSize(size);
-                                  },
-                                  child: Image.asset(value["image"]!)),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: isActionEnabled ? 20 : 5),
-                          child: Column(
-                            children: [
-                              Text(
-                                "$key",
-                                style: GoogleFonts.inter(
-                                  fontSize: isActionEnabled ? 25 : 16,
-                                ),
-                              ),
-                              Text(
-                                "${value["title"]!}",
-                                style: GoogleFonts.inter(
-                                  fontSize: isActionEnabled ? 17 : 12,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+          child: OrganizationChart(
+            rootEmployee: Employee(
+              name: 'Rizki Adventus',
+              position: 'Ketua Umum',
+              asset: AssetConstant.founder1,
+              subordinates: [
+                Employee(
+                  name: 'Program Manager Jkt',
+                  position: 'Program Manager Jkt',
+                  subordinates: [
+                    Employee(
+                      name: 'Parents Manager Jkt',
+                      position: 'Parents Manager Jkt',
                     ),
-                  ),
-                )
-                .values
-                .toList(),
+                    Employee(
+                      name: 'Administrasi',
+                      position: 'Administrasi',
+                    ),
+                  ],
+                ),
+                Employee(
+                  name: 'Program Manager Bks',
+                  position: 'Program Manager Bks',
+                  subordinates: [
+                    Employee(
+                      name: 'Parents Manager Bks',
+                      position: 'Parents Manager Bks',
+                    ),
+                    Employee(
+                      name: 'Administrasi',
+                      position: 'Administrasi',
+                    ),
+                  ],
+                ),
+                Employee(
+                  name: 'Technical Director',
+                  position: 'Technical Director',
+                  subordinates: [
+                    Employee(
+                      name: 'All Coach',
+                      position: 'All Coach',
+                    ),
+                  ],
+                ),
+                Employee(
+                  name: 'Administrasi',
+                  position: 'Administrasi',
+                ),
+                Employee(
+                  name: 'Bendahara',
+                  position: 'Bendahara',
+                ),
+              ],
+            ),
           ),
         ),
         FooterWidget(),

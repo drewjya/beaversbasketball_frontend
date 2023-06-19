@@ -44,13 +44,6 @@ class FooterWidget extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              "Sekolah Victory Plus Bekasi,".toWidget(),
-              "Perumahan Kemang Pratama,".toWidget(),
-              "Jalan Citra Niaga Raya Bloc AO1-14,".toWidget(),
-              "Bojong Rawalumbu Kota Bekasi.".toWidget(),
-              SizedBox(
-                height: 10,
-              ),
               "Bintang Sport Center Bekasi ".toWidget(),
               "Jl. Raya Mustikasari No.109, RT.004/RW.001, Mustikasari, Kec. Mustika Jaya, Kota Bks, Jawa Barat 17116"
                   .toWidget(),
@@ -261,13 +254,6 @@ class FooterWidget extends StatelessWidget {
                         _TitleFooter(text: "ADDRESS"),
                         "Raffles College - Kebon Jeruk".toWidget(),
                         "Jalan Arjuna Utara no. 35 Jakarta Barat.".toWidget(),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        "Sekolah Victory Plus Bekasi,".toWidget(),
-                        "Perumahan Kemang Pratama,".toWidget(),
-                        "Jalan Citra Niaga Raya Bloc AO1-14,".toWidget(),
-                        "Bojong Rawalumbu Kota Bekasi.".toWidget(),
                         SizedBox(
                           height: 10,
                         ),

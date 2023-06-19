@@ -5,7 +5,11 @@ import 'package:go_router/go_router.dart';
 
 class ContentView extends HookConsumerWidget {
   final NavbarFilter filter;
-  const ContentView({required this.filter, super.key});
+  const ContentView({
+    required this.filter,
+    this.body,
+  });
+  final Widget? body;
 
   static const routeName = '/content';
 
@@ -81,6 +85,13 @@ class ContentView extends HookConsumerWidget {
                     NavigationItem(
                       isActive: filter == NavbarFilter.news,
                       label: "News",
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    NavigationItem(
+                      isActive: filter == NavbarFilter.login,
+                      label: "Login (Admin)",
                     ),
                     SizedBox(
                       width: 20,
@@ -189,6 +200,13 @@ class ContentView extends HookConsumerWidget {
                     width: 20,
                   ),
                   NavigationItem(
+                    isActive: filter == NavbarFilter.login,
+                    label: "Login (Admin)",
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  NavigationItem(
                     isActive: filter == NavbarFilter.registration,
                     label: "Registration",
                   ),
@@ -208,13 +226,13 @@ class ContentView extends HookConsumerWidget {
                 ],
           shadowColor: Colors.transparent,
         ),
-        body: ContentBody(filter: filter),
+        body: body ?? ContentBody(filter: filter),
       ),
     );
   }
 }
 
-class NavigationItem extends StatelessWidget {
+class NavigationItem extends ConsumerWidget {
   final String label;
   final bool isActive;
   final Widget? labelWidget;
@@ -226,12 +244,19 @@ class NavigationItem extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     return Center(
       child: InkWell(
         onHover: (value) {},
         onTap: (!isActive)
-            ? () => context.replaceNamed(label.toLowerCase())
+            ? () {
+                if (ref.read(authProvider).value != null &&
+                    ref.read(authProvider).value!.isEmpty) {
+                  ref.read(authProvider.notifier).logOut();
+                }
+                context.replaceNamed(
+                    label == "Login (Admin)" ? "login" : label.toLowerCase());
+              }
             : null,
         borderRadius: BorderRadius.circular(15),
         child: Stack(

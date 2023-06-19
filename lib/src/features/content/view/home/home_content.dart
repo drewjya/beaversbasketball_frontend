@@ -39,6 +39,13 @@ class HomeContent extends HookConsumerWidget {
       return;
     }, [ref.watch(youtubeDataProvider), focusNode]);
     final isActionEnabled = MediaQuery.of(context).size.width > 800;
+    final titleStyle = TextStyle(
+      fontSize: isActionEnabled ? 20 : 12,
+      fontWeight: FontWeight.w700,
+    );
+    final bodyStyle = TextStyle(
+      fontSize: isActionEnabled ? 18 : 10,
+    );
     final sponsor = [
       AssetConstant.sponsor1,
       AssetConstant.sponsor2,
@@ -206,13 +213,53 @@ class HomeContent extends HookConsumerWidget {
                 physics: NeverScrollableScrollPhysics(),
               ),
             ),
+            SizedBox(
+              height: !isActionEnabled ? 16 : 48,
+            ),
+            TitlePage(text: "HEADLINE NEWS"),
+            Container(
+              height: MediaQuery.of(context).size.height * (0.5),
+              margin: EdgeInsets.symmetric(horizontal: 40),
+              width: MediaQuery.of(context).size.height * (0.7),
+              child: Column(children: [
+                Expanded(
+                  child: Container(
+                    width: double.infinity,
+                    child: Image.asset(
+                      AssetConstant.carousel1,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                Container(
+                    color: NAVBAR,
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Klub Basket Indonesia Muda Kembali Berlatih Ke Lapangan ABC Senayan",
+                          style: titleStyle,
+                        ),
+                        Text(
+                          "${DateTime.now()}",
+                          style: bodyStyle,
+                        ),
+                      ],
+                    )),
+              ]),
+            ),
+            SizedBox(
+              height: !isActionEnabled ? 16 : 48,
+            ),
             TitlePage(text: "SUPPORTED BY"),
             SizedBox(
               width: MediaQuery.of(context).size.width *
                   (!isActionEnabled ? 1 : 0.75),
               child: GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
+                  crossAxisCount: 4,
                   childAspectRatio: 1,
                   mainAxisSpacing: !isActionEnabled ? 10 : 40,
                   crossAxisSpacing: !isActionEnabled ? 10 : 40,
@@ -255,9 +302,11 @@ class HomeContent extends HookConsumerWidget {
 
 class TitlePage extends StatelessWidget {
   final String text;
+  final double? fontSize;
   const TitlePage({
     Key? key,
     required this.text,
+    this.fontSize,
   }) : super(key: key);
 
   @override
@@ -271,7 +320,7 @@ class TitlePage extends StatelessWidget {
         Text(
           "$text",
           style: TextStyle(
-            fontSize: 35,
+            fontSize: fontSize ?? 35,
             fontWeight: FontWeight.w800,
           ),
           textAlign: TextAlign.center,

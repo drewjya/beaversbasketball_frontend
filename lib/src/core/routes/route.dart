@@ -1,3 +1,4 @@
+import 'package:beaverbasketball/src/features/content/view/registration/peraturan_screen.dart';
 import 'package:beaverbasketball/src/src.dart';
 import 'package:go_router/go_router.dart';
 
@@ -27,7 +28,6 @@ Page<dynamic> Function(BuildContext, GoRouterState) defaultPageBuilder<T>(
 class RouteApp {
   static GoRouter route = GoRouter(
     errorBuilder: (context, state) {
-      
       return ContentView(
         filter: NavbarFilter.home,
       );
@@ -104,19 +104,30 @@ class RouteApp {
             ),
           ),
           GoRoute(
-            path: 'registration',
-            name: 'registration',
-            builder: (BuildContext context, GoRouterState state) {
-              return ContentView(
-                filter: NavbarFilter.registration,
-              );
-            },
-            pageBuilder: defaultPageBuilder(
-              ContentView(
-                filter: NavbarFilter.registration,
+              path: 'registration',
+              name: 'registration',
+              builder: (BuildContext context, GoRouterState state) {
+                return ContentView(
+                  filter: NavbarFilter.registration,
+                );
+              },
+              pageBuilder: defaultPageBuilder(
+                ContentView(
+                  filter: NavbarFilter.registration,
+                ),
               ),
-            ),
-          ),
+              routes: [
+                GoRoute(
+                  path: 'tata-tertib',
+                  name: 'tata-tertib',
+                  pageBuilder: defaultPageBuilder(
+                    ContentView(
+                      filter: NavbarFilter.registration,
+                      body: PeraturanContent(),
+                    ),
+                  ),
+                ),
+              ]),
           GoRoute(
             path: 'achievement',
             name: 'achievement',

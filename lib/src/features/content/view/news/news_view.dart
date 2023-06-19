@@ -1,5 +1,6 @@
 import 'package:beaverbasketball/src/src.dart';
 
+
 class NewsView extends HookConsumerWidget {
   const NewsView({super.key});
   @override

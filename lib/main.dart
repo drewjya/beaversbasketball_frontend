@@ -1,14 +1,20 @@
-import 'package:beaverbasketball/src/core/routes/route.dart';
-import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:beaverbasketball/src/src.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_strategy/url_strategy.dart';
 
+final sharedPreferencesProvider = Provider<SharedPreferences>((ref) {
+  throw UnimplementedError();
+});
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   setPathUrlStrategy();
+  final sharedPreferences = await SharedPreferences.getInstance();
 
   runApp(ProviderScope(
-    overrides: [],
+    overrides: [
+      sharedPreferencesProvider.overrideWithValue(sharedPreferences),
+    ],
     child: BeaversApp(),
   ));
 }

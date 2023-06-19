@@ -22,4 +22,11 @@ extension MapIndexssa<T> on Iterable<T> {
       yield convert(index++, element, index == 0, index == (length));
     }
   }
+
+  Iterable<R> mapFixed<R>(R Function(T element, int index) convert) sync* {
+    final count = length;
+    for (var i = 0; i < count; i++) {
+      yield convert(elementAt(i), i);
+    }
+  }
 }
