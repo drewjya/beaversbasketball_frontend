@@ -11,21 +11,33 @@ import 'package:dartz/dartz.dart';
 import 'package:file_picker/src/platform_file.dart';
 import 'package:http/http.dart' as http;
 
-const _apiKey2 = "AIzaSyBYnhuaSpaPXeakbujqOqNIAuKsSNB49Vo";
-const _apiKey1 = "AIzaSyAUo0xmh0jiQffKxa8mK6fhxJBXX3uenJw";
+const _apiKey1 = "AIzaSyBYnhuaSpaPXeakbujqOqNIAuKsSNB49Vo";
+const _apiKey2 = "AIzaSyAUo0xmh0jiQffKxa8mK6fhxJBXX3uenJw";
 
 //AIzaSyAUo0xmh0jiQffKxa8mK6fhxJBXX3uenJw
 class ContentRepositoryImpl extends ContentRepository {
   @override
   Future<List<YoutubeModel>> loadYoutubePost() async {
-    final url =
-        "https://www.googleapis.com/youtube/v3/search?channelId=UCqQ32OBHgYtWcxCXjT-vRxQ&maxResults=3&key=$_apiKey2&order=date&part=snippet";
+    final apiKeys = [_apiKey1, _apiKey2];
+    List<YoutubeModel> data = [];
+    for (var i = 0; i < apiKeys.length; i++) {
+      try {
+        final url =
+            "https://www.googleapis.com/youtube/v3/search?channelId=UCqQ32OBHgYtWcxCXjT-vRxQ&maxResults=3&key=${apiKeys[i]}&order=date&part=snippet";
 
-    final data = await HttpWrapper.getYoutube(
-      url: url,
-      fromJson: (p0) =>
-          (p0["items"] as List).map((e) => YoutubeModel.fromMap(e)).toList(),
-    );
+        data = await HttpWrapper.getYoutube(
+          url: url,
+          fromJson: (p0) => (p0["items"] as List)
+              .map((e) => YoutubeModel.fromMap(e))
+              .toList(),
+        );
+        break;
+      } catch (e) {
+        if (i == (apiKeys.length - 1)) {
+          throw e;
+        }
+      }
+    }
 
     return data;
   }

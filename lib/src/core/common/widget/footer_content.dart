@@ -654,8 +654,6 @@ class SupportedItem extends HookConsumerWidget {
             ),
           ),
           if (isEdit.value)
-
-          
             Align(
               alignment: Alignment(0.95, -0.95),
               child: Column(
