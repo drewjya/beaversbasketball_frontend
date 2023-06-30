@@ -86,10 +86,6 @@ class EmployeeChart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(8),
-      decoration: BoxDecoration(
-          border: (employee.subordinates.isNotEmpty)
-              ? Border.all(color: Colors.white)
-              : null),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [

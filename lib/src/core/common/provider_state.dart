@@ -16,6 +16,11 @@ abstract class ProviderState<T> implements Equatable {
     this.error,
   });
 
+  ProviderState<T> copyWith({
+    required T? value,
+    String? error,
+  });
+
   static InitialState<T> init<T>() => InitialState<T>();
   static LoadingState<T> loading<T>({T? value}) =>
       LoadingState<T>(value: value);
@@ -93,6 +98,11 @@ class InitialState<T> extends ProviderState<T> {
     }
     return onInit();
   }
+
+  @override
+  ProviderState<T> copyWith({required T? value, String? error}) {
+    return InitialState();
+  }
 }
 
 class LoadingState<T> extends ProviderState<T> {
@@ -133,9 +143,19 @@ class LoadingState<T> extends ProviderState<T> {
     }
     return onLoading(value);
   }
+
+  @override
+  ProviderState<T> copyWith({required T? value, String? error}) {
+    return LoadingState(value: value ?? this.value);
+  }
 }
 
 class SuccessState<T> extends ProviderState<T> {
+  @override
+  String toString() {
+    return "ProviderState.success(value:$value)";
+  }
+
   final T value;
   const SuccessState({
     required this.value,
@@ -178,6 +198,13 @@ class SuccessState<T> extends ProviderState<T> {
       return orElse();
     }
     return onSuccess(value);
+  }
+
+  @override
+  ProviderState<T> copyWith({required T? value, String? error}) {
+    return SuccessState(
+      value: value ?? this.value,
+    );
   }
 }
 
@@ -226,5 +253,10 @@ class ErrorState<T> extends ProviderState<T> {
       return orElse();
     }
     return onError(value, error);
+  }
+
+  @override
+  ProviderState<T> copyWith({required T? value, String? error}) {
+    return ErrorState(value: value ?? this.value, error: error ?? this.error);
   }
 }

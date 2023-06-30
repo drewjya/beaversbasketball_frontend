@@ -1,5 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
+import 'package:beaverbasketball/src/features/content/providers/news_provider.dart';
+import 'package:beaverbasketball/src/features/content/providers/sponsor_providers.dart';
 import 'package:beaverbasketball/src/src.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
@@ -46,141 +48,136 @@ class HomeContent extends HookConsumerWidget {
     final bodyStyle = TextStyle(
       fontSize: isActionEnabled ? 18 : 10,
     );
-    final sponsor = [
-      AssetConstant.sponsor1,
-      AssetConstant.sponsor2,
-      AssetConstant.sponsor3,
-      AssetConstant.iconBPJS
-    ];
-    return ref.watch(youtubeDataProvider).when(data: (data) {
-      return SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 20),
-              child: Container(
-                height: !isActionEnabled ? 200 : 400,
-                width: double.infinity,
-                child: Stack(
-                  children: [
-                    CarouselSlider(
-                      carouselController: carouselController,
-                      options: CarouselOptions(height: 400.0),
-                      items: [
-                        AssetConstant.carousel1,
-                        AssetConstant.carousel2,
-                        AssetConstant.carousel3,
-                      ].map((i) {
-                        return Builder(
-                          builder: (BuildContext context) {
-                            return Container(
-                              width: MediaQuery.of(context).size.width,
-                              margin: EdgeInsets.symmetric(horizontal: 5.0),
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: AssetImage(i),
-                                ),
-                              ),
-                            );
-                          },
-                        );
-                      }).toList(),
-                    ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: IconButton(
-                          onPressed: () {
-                            carouselController.previousPage();
-                          },
-                          style: IconButton.styleFrom(
-                            backgroundColor: Colors.white,
-                          ),
-                          icon: Icon(Icons.arrow_back_ios_new_rounded)),
-                    ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: IconButton(
-                          onPressed: () {
-                            carouselController.nextPage();
-                          },
-                          icon: Icon(Icons.arrow_forward_ios_rounded)),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-              child: Column(
+
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 20),
+            child: Container(
+              height: !isActionEnabled ? 200 : 400,
+              width: double.infinity,
+              child: Stack(
                 children: [
-                  TitlePage(text: "WELCOME"),
-                  Container(
-                    width: MediaQuery.of(context).size.width *
-                        (isActionEnabled ? 0.7 : 1),
-                    margin: EdgeInsets.symmetric(horizontal: 30),
-                    padding: EdgeInsets.all(30),
-                    decoration: BoxDecoration(
-                      color: BACKGROUND_CONTENT,
-                      border: Border.all(color: PRIMARY),
-                    ),
-                    child: Text(
-                      "Selamat datang di official website dari Beavers Basketball Club.\nWebsite ini dibuat supaya teman-teman semua bisa mengenal lebih dekat dengan Beavers Basketball Club. Jika teman-teman memiliki pertanyaan lebih lanjut silahkan hubungi admin Wa sesuai dengan lokasi latihan kalian.\nSee You On Court BRAVER!",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
-                  TitlePage(
-                    text: "YOUTUBE",
-                  ),
-                  InkWell(
-                    onTap: () {
-                      if (!isFocused.value) {
-                        isFocused.value = true;
-                      }
-                    },
-                    onHover: (value) {
-                      if (!value) {
-                        isFocused.value = false;
-                      }
-                    },
-                    child: Stack(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                            color: PRIMARY,
-                          )),
-                          width: MediaQuery.of(context).size.width * 0.7,
-                          child: YoutubePlayer(
-                            enableFullScreenOnVerticalDrag: false,
-                            controller: controller,
-                            aspectRatio: 4 / 2,
-                          ),
-                        ),
-                        if (!isFocused.value) ...[
-                          PointerInterceptor(
-                            child: Container(
-                              width: MediaQuery.of(context).size.width * 0.7,
-                              color: Colors.transparent,
-                              child: AspectRatio(
-                                aspectRatio: 4 / 2,
+                  CarouselSlider(
+                    carouselController: carouselController,
+                    options: CarouselOptions(height: 400.0),
+                    items: [
+                      AssetConstant.carousel1,
+                      AssetConstant.carousel2,
+                      AssetConstant.carousel3,
+                    ].map((i) {
+                      return Builder(
+                        builder: (BuildContext context) {
+                          return Container(
+                            width: MediaQuery.of(context).size.width,
+                            margin: EdgeInsets.symmetric(horizontal: 5.0),
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: AssetImage(i),
                               ),
                             ),
-                          ),
-                        ]
-                      ],
-                    ),
+                          );
+                        },
+                      );
+                    }).toList(),
+                  ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: IconButton(
+                        onPressed: () {
+                          carouselController.previousPage();
+                        },
+                        style: IconButton.styleFrom(
+                          backgroundColor: Colors.white,
+                        ),
+                        icon: Icon(Icons.arrow_back_ios_new_rounded)),
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: IconButton(
+                        onPressed: () {
+                          carouselController.nextPage();
+                        },
+                        icon: Icon(Icons.arrow_forward_ios_rounded)),
                   ),
                 ],
               ),
             ),
-            SizedBox(
-              height: !isActionEnabled ? 16 : 48,
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            child: Column(
+              children: [
+                TitlePage(text: "WELCOME"),
+                Container(
+                  width: MediaQuery.of(context).size.width *
+                      (isActionEnabled ? 0.7 : 1),
+                  margin: EdgeInsets.symmetric(horizontal: 30),
+                  padding: EdgeInsets.all(30),
+                  decoration: BoxDecoration(
+                    color: BACKGROUND_CONTENT,
+                    border: Border.all(color: PRIMARY),
+                  ),
+                  child: Text(
+                    "Selamat datang di official website dari Beavers Basketball Club.\nWebsite ini dibuat supaya teman-teman semua bisa mengenal lebih dekat dengan Beavers Basketball Club. Jika teman-teman memiliki pertanyaan lebih lanjut silahkan hubungi admin Wa sesuai dengan lokasi latihan kalian.\nSee You On Court BRAVER!",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+                TitlePage(
+                  text: "YOUTUBE",
+                ),
+                InkWell(
+                  onTap: () {
+                    if (!isFocused.value) {
+                      isFocused.value = true;
+                    }
+                  },
+                  onHover: (value) {
+                    if (!value) {
+                      isFocused.value = false;
+                    }
+                  },
+                  child: Stack(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                          color: PRIMARY,
+                        )),
+                        width: MediaQuery.of(context).size.width * 0.7,
+                        child: YoutubePlayer(
+                          enableFullScreenOnVerticalDrag: false,
+                          controller: controller,
+                          aspectRatio: 4 / 2,
+                        ),
+                      ),
+                      if (!isFocused.value) ...[
+                        PointerInterceptor(
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.7,
+                            color: Colors.transparent,
+                            child: AspectRatio(
+                              aspectRatio: 4 / 2,
+                            ),
+                          ),
+                        ),
+                      ]
+                    ],
+                  ),
+                ),
+              ],
             ),
-            SizedBox(
+          ),
+          SizedBox(
+            height: !isActionEnabled ? 16 : 48,
+          ),
+          ref.watch(youtubeDataProvider).when(data: (data) {
+            return SizedBox(
               width: MediaQuery.of(context).size.width *
                   (!isActionEnabled ? 1 : 0.75),
               child: GridView.builder(
@@ -212,21 +209,34 @@ class HomeContent extends HookConsumerWidget {
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
               ),
-            ),
-            SizedBox(
-              height: !isActionEnabled ? 16 : 48,
-            ),
-            TitlePage(text: "HEADLINE NEWS"),
-            Container(
-              height: MediaQuery.of(context).size.height * (0.5),
-              margin: EdgeInsets.symmetric(horizontal: 40),
-              width: MediaQuery.of(context).size.height * (0.7),
-              child: Column(children: [
+            );
+          }, error: (error, _) {
+            return Center(child: Text("data"));
+          }, loading: () {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }),
+          SizedBox(
+            height: !isActionEnabled ? 16 : 48,
+          ),
+          TitlePage(text: "HEADLINE NEWS"),
+          Container(
+            height: MediaQuery.of(context).size.height * (0.5),
+            margin: EdgeInsets.symmetric(horizontal: 40),
+            width: MediaQuery.of(context).size.height * (0.7),
+            child: Consumer(builder: (context, ref, child) {
+              final news = ref.watch(newsProvider).value ?? [];
+              if (news.isEmpty) {
+                return SizedBox();
+              }
+              final headline = news.first;
+              return Column(children: [
                 Expanded(
                   child: Container(
                     width: double.infinity,
-                    child: Image.asset(
-                      AssetConstant.carousel1,
+                    child: Image.network(
+                      headline.url_gambar.url,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -239,64 +249,58 @@ class HomeContent extends HookConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Klub Basket Indonesia Muda Kembali Berlatih Ke Lapangan ABC Senayan",
+                          headline.title,
                           style: titleStyle,
                         ),
                         Text(
-                          "${DateTime.now()}",
+                          headline.tanggal,
                           style: bodyStyle,
                         ),
                       ],
                     )),
-              ]),
-            ),
-            SizedBox(
-              height: !isActionEnabled ? 16 : 48,
-            ),
-            TitlePage(text: "SUPPORTED BY"),
-            SizedBox(
-              width: MediaQuery.of(context).size.width *
-                  (!isActionEnabled ? 1 : 0.75),
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4,
-                  childAspectRatio: 1,
-                  mainAxisSpacing: !isActionEnabled ? 10 : 40,
-                  crossAxisSpacing: !isActionEnabled ? 10 : 40,
-                ),
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                itemBuilder: (context, index) {
-                  return Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: PRIMARY,
-                      ),
-                      color: Colors.white,
-                      image: DecorationImage(
-                        image: AssetImage(sponsor[index]),
-                      ),
-                    ),
-                  );
-                },
-                itemCount: sponsor.length,
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
+              ]);
+            }),
+          ),
+          SizedBox(
+            height: !isActionEnabled ? 16 : 48,
+          ),
+          TitlePage(text: "SUPPORTED BY"),
+          SizedBox(
+            width: MediaQuery.of(context).size.width *
+                (!isActionEnabled ? 1 : 0.75),
+            child: GridView(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 4,
+                childAspectRatio: 1,
+                mainAxisSpacing: !isActionEnabled ? 10 : 40,
+                crossAxisSpacing: !isActionEnabled ? 10 : 40,
               ),
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              children: [
+                ...(ref.watch(sponsorProvider).value ?? [])
+                    .mapFixed((element, index) => Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: PRIMARY,
+                            ),
+                            color: Colors.white,
+                            image: DecorationImage(
+                              image: NetworkImage(element.url_gambar.url),
+                            ),
+                          ),
+                        )),
+              ],
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
             ),
-            SizedBox(
-              height: !isActionEnabled ? 24 : 48,
-            ),
-            FooterWidget()
-          ],
-        ),
-      );
-    }, error: (error, _) {
-      return Center(child: Text("data"));
-    }, loading: () {
-      return Center(
-        child: CircularProgressIndicator(),
-      );
-    });
+          ),
+          SizedBox(
+            height: !isActionEnabled ? 24 : 48,
+          ),
+          FooterWidget()
+        ],
+      ),
+    );
   }
 }
 

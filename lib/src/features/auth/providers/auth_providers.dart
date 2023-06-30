@@ -1,17 +1,34 @@
+import 'dart:developer';
+
 import 'package:beaverbasketball/main.dart';
 import 'package:beaverbasketball/src/core/api/url.dart';
 import 'package:beaverbasketball/src/core/common/provider_state.dart';
 import 'package:beaverbasketball/src/features/auth/repository/auth_repository_impl.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:beaverbasketball/src/features/content/providers/coach_providers.dart';
 
-class AuthNotifier extends Notifier<ProviderState<String>> {
-  @override
-  build() {
+class AuthNotifier extends ProviderNotifier<String> {
+  AuthNotifier({required super.ref}) {
+    initBuild();
+  }
+
+  initBuild() async {
     final auth = ref.read(sharedPreferencesProvider).getString(PrefConst.auth);
+    log("${auth} AUTHOTENTICATION");
     if (auth == null) {
-      return ProviderState.init();
+      state = ProviderState.init();
+      return;
     }
-    return ProviderState.success(value: auth);
+    final checkSession =
+        await ref.read(authRepositoryProvider).checkSession(token: auth);
+
+    checkSession.fold((l) async {
+      log(l + "AUTH AYAm");
+      await ref.read(sharedPreferencesProvider).remove(PrefConst.auth);
+      state = ProviderState.init();
+    }, (r) {
+      log(r + "AUTH AYAm");
+      state = ProviderState.success(value: auth);
+    });
   }
 
   login({
@@ -24,7 +41,7 @@ class AuthNotifier extends Notifier<ProviderState<String>> {
       function: () => ref
           .read(authRepositoryProvider)
           .loginAdmin(email: email, password: password),
-    oldValue: state.value,
+      oldValue: state.value,
     );
     if (res.value != null) {
       ref.read(sharedPreferencesProvider).setString(PrefConst.auth, res.value!);
@@ -35,10 +52,13 @@ class AuthNotifier extends Notifier<ProviderState<String>> {
   logOut() async {
     state = ProviderState.loading(value: state.value);
     await ref.read(sharedPreferencesProvider).remove(PrefConst.auth);
-    await ref.read(authRepositoryProvider).logOut(token: state.value!);
+    // await ref.read(authRepositoryProvider).logOut(token: state.value!);
+
     state = ProviderState.init();
+    print(state);
   }
 }
 
-final authProvider =
-    NotifierProvider<AuthNotifier, ProviderState<String>>(AuthNotifier.new);
+final authProvider = ProviderNotifierProvider<AuthNotifier, String>(
+  (ref) => AuthNotifier(ref: ref),
+);

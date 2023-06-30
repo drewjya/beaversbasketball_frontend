@@ -90,6 +90,20 @@ class RouteApp {
             ),
           ),
           GoRoute(
+            path: 'users',
+            name: 'users',
+            builder: (BuildContext context, GoRouterState state) {
+              return ContentView(
+                filter: NavbarFilter.users,
+              );
+            },
+            pageBuilder: defaultPageBuilder(
+              ContentView(
+                filter: NavbarFilter.users,
+              ),
+            ),
+          ),
+          GoRoute(
             path: 'schedule',
             name: 'schedule',
             builder: (BuildContext context, GoRouterState state) {

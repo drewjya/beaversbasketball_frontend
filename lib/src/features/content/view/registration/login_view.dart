@@ -1,6 +1,17 @@
 import 'package:beaverbasketball/src/src.dart';
 import 'package:go_router/go_router.dart';
 
+showToast(BuildContext context, String message) {
+  ScaffoldMessenger.of(context).removeCurrentSnackBar();
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: message.toWidget(),
+      behavior: SnackBarBehavior.floating,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+    ),
+  );
+}
+
 class LoginView extends HookConsumerWidget {
   const LoginView({super.key});
   @override
@@ -15,6 +26,16 @@ class LoginView extends HookConsumerWidget {
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: "Berhasil Login".toWidget()));
           context.pushReplacementNamed("home");
+        },
+        onLoading: (value) {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            },
+          );
         },
         onError: (value, error) {
           ScaffoldMessenger.of(context)
@@ -53,6 +74,7 @@ class LoginView extends HookConsumerWidget {
                   TextFieldCustom(
                     label: "Password",
                     controller: passwor,
+                    isPassword: true,
                   ),
                   SizedBox(
                     height: 15,

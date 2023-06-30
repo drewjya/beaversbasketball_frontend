@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:beaverbasketball/src/features/content/view/user_detail/user_detail_view.dart';
 import 'package:beaverbasketball/src/src.dart';
 
 class ContentBody extends StatelessWidget {
@@ -30,6 +31,8 @@ class ContentBody extends StatelessWidget {
         return LoginView();
       case NavbarFilter.registration:
         return RegisterView();
+      case NavbarFilter.users:
+        return UserDetailView();
     }
   }
 }

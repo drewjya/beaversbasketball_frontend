@@ -7,6 +7,7 @@ enum NavbarFilter {
   registration(value: "registration"),
   achievement(value: "achievement"),
   news(value: "news"),
+  users(value: "users"),
   login(value: "login");
 
   final String value;

@@ -1,7 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
+import 'dart:developer';
+
 import 'package:beaverbasketball/src/src.dart';
 import 'package:go_router/go_router.dart';
+
+final isNewsDetailProvider = StateProvider<bool>((ref) {
+  return false;
+});
 
 class ContentView extends HookConsumerWidget {
   final NavbarFilter filter;
@@ -96,6 +102,15 @@ class ContentView extends HookConsumerWidget {
                     SizedBox(
                       width: 20,
                     ),
+                    if (ref.watch(authProvider).value != null) ...[
+                      NavigationItem(
+                        isActive: filter == NavbarFilter.users,
+                        label: "Users",
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                    ],
                     NavigationItem(
                       isActive: filter == NavbarFilter.registration,
                       label: "Registration",
@@ -120,6 +135,7 @@ class ContentView extends HookConsumerWidget {
           toolbarHeight: 90,
           title: GestureDetector(
             onTap: () {
+              ref.invalidate(isNewsDetailProvider);
               context.replaceNamed("home");
             },
             child: FittedBox(
@@ -206,6 +222,15 @@ class ContentView extends HookConsumerWidget {
                   SizedBox(
                     width: 20,
                   ),
+                  if (ref.watch(authProvider).value != null) ...[
+                    NavigationItem(
+                      isActive: filter == NavbarFilter.users,
+                      label: "Users",
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                  ],
                   NavigationItem(
                     isActive: filter == NavbarFilter.registration,
                     label: "Registration",
@@ -248,16 +273,19 @@ class NavigationItem extends ConsumerWidget {
     return Center(
       child: InkWell(
         onHover: (value) {},
-        onTap: (!isActive)
-            ? () {
-                if (ref.read(authProvider).value != null &&
-                    ref.read(authProvider).value!.isEmpty) {
-                  ref.read(authProvider.notifier).logOut();
-                }
-                context.replaceNamed(
-                    label == "Login (Admin)" ? "login" : label.toLowerCase());
-              }
-            : null,
+        onTap: () {
+          ref.invalidate(isNewsDetailProvider);
+          log(label);
+
+          if (ref.read(authProvider).value != null &&
+              ref.read(authProvider).value!.isNotEmpty &&
+              label == "Login (Admin)") {
+            print(ref.read(authProvider).value);
+            ref.read(authProvider.notifier).logOut();
+          }
+          context.replaceNamed(
+              label == "Login (Admin)" ? "login" : label.toLowerCase());
+        },
         borderRadius: BorderRadius.circular(15),
         child: Stack(
           alignment: Alignment.center,

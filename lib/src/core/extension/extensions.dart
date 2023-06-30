@@ -1,3 +1,4 @@
+import 'package:beaverbasketball/src/core/api/url.dart';
 import 'package:flutter/material.dart';
 
 extension WidgetString on String {
@@ -72,4 +73,12 @@ extension WidgetString on String {
           ),
     );
   }
+
+  String get url {
+    return "${ApiUrl.storage}/$this";
+  }
+}
+
+extension TXC on TextEditingController {
+  bool get isEmpty => text.isEmpty;
 }

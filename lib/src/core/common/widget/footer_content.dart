@@ -1,5 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:beaverbasketball/src/core/api/url.dart';
+import 'package:beaverbasketball/src/features/content/providers/sponsor_providers.dart';
 import 'package:beaverbasketball/src/src.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -12,6 +16,7 @@ class FooterWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isActionEnabled = MediaQuery.of(context).size.width > 800;
+
     final sponsor = [
       AssetConstant.sponsor1,
       AssetConstant.sponsor2,
@@ -197,37 +202,7 @@ class FooterWidget extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              _TitleFooter(
-                text: "SUPPORTED BY",
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 5,
-                  childAspectRatio: 1,
-                  mainAxisSpacing: 30,
-                  crossAxisSpacing: 30,
-                ),
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                itemBuilder: (context, index) {
-                  return Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: PRIMARY,
-                      ),
-                      color: Colors.white,
-                      image: DecorationImage(
-                        image: AssetImage(sponsor[index]),
-                      ),
-                    ),
-                  );
-                },
-                itemCount: sponsor.length,
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-              ),
+              SupportedByWidget(),
               SizedBox(
                 height: 20,
               ),
@@ -442,61 +417,7 @@ class FooterWidget extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              _TitleFooter(
-                text: "SUPPORTED BY",
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width * 0.75,
-                child: sponsor.length < 5
-                    ? Wrap(
-                        spacing: 30,
-                        runSpacing: 30,
-                        alignment: WrapAlignment.center,
-                        children: sponsor
-                            .map((e) => Container(
-                                  width: 150,
-                                  height: 150,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: PRIMARY,
-                                    ),
-                                    color: Colors.white,
-                                    image: DecorationImage(
-                                      image: AssetImage(e),
-                                    ),
-                                  ),
-                                ))
-                            .toList(),
-                      )
-                    : GridView.count(
-                        crossAxisCount: 5,
-                        childAspectRatio: 1,
-                        mainAxisSpacing: 30,
-                        crossAxisSpacing: 30,
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        children: sponsor
-                            .map((e) => Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: PRIMARY,
-                                    ),
-                                    color: Colors.white,
-                                    image: DecorationImage(
-                                      image: AssetImage(e),
-                                    ),
-                                  ),
-                                ))
-                            .toList(),
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                      ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
+              SupportedByWidget(isActionEnabled: isActionEnabled),
               Text(
                 "©2023 BEAVERSBASKETBALL",
                 style: GoogleFonts.inter(
@@ -507,6 +428,329 @@ class FooterWidget extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class SupportedByWidget extends HookConsumerWidget {
+  final bool isActionEnabled;
+  const SupportedByWidget({
+    super.key,
+    this.isActionEnabled = false,
+  });
+
+  @override
+  Widget build(BuildContext context, ref) {
+    final sponsor = (ref.watch(sponsorProvider).value ?? []);
+    final isEdit = useState(false);
+    if (isActionEnabled) {
+      return Column(
+        children: [
+          _TitleFooter(
+            text: "SUPPORTED BY",
+            onTap: () {
+              isEdit.value = !isEdit.value;
+            },
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width * 0.75,
+            child: sponsor.length < 5
+                ? Wrap(
+                    spacing: 30,
+                    runSpacing: 30,
+                    alignment: WrapAlignment.center,
+                    children: [
+                      ...sponsor.mapFixed(
+                        (e, index) => SupportedItem(
+                          image: e.url_gambar,
+                          id: "${e.id}",
+                          isEdit: isEdit,
+                          isLimited: true,
+                        ),
+                      ),
+                      if (isEdit.value)
+                        SupportedItem(
+                          image: null,
+                          isEdit: isEdit,
+                        )
+                    ],
+                  )
+                : GridView.count(
+                    crossAxisCount: 5,
+                    childAspectRatio: 1,
+                    mainAxisSpacing: 30,
+                    crossAxisSpacing: 30,
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    children: [
+                      ...sponsor.map((e) => SupportedItem(
+                            image: e.url_gambar,
+                            isEdit: isEdit,
+                            id: "${e.id}",
+                          )),
+                      if (isEdit.value)
+                        SupportedItem(
+                          image: null,
+                          isEdit: isEdit,
+                        )
+                    ],
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                  ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+        ],
+      );
+    }
+    return Column(
+      children: [
+        _TitleFooter(
+          text: "SUPPORTED BY",
+          onTap: () {
+            isEdit.value = !isEdit.value;
+          },
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        GridView(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 5,
+            childAspectRatio: 1,
+            mainAxisSpacing: 30,
+            crossAxisSpacing: 30,
+          ),
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          children: [
+            ...sponsor.mapFixed((item, index) {
+              return SupportedItem(
+                image: sponsor[index].url_gambar,
+                id: "${sponsor[index].id}",
+                isEdit: isEdit,
+              );
+            }),
+            if (isEdit.value)
+              SupportedItem(
+                image: null,
+                isEdit: isEdit,
+              )
+          ],
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+        ),
+      ],
+    );
+  }
+}
+
+class SupportedItem extends HookConsumerWidget {
+  final String? image;
+  final bool isLimited;
+  final String? id;
+  final ValueNotifier<bool> isEdit;
+  const SupportedItem({
+    required this.image,
+    this.isLimited = false,
+    this.id,
+    required this.isEdit,
+  });
+
+  @override
+  Widget build(BuildContext context, ref) {
+    final bytes = useState<Uint8List?>(null);
+    final platformFile = useState<PlatformFile?>(null);
+    final editActive = useState(false);
+    final user = ref.watch(authProvider);
+    useEffect(() {
+      editActive.value = false;
+      bytes.value = null;
+      platformFile.value = null;
+      return;
+    }, [isEdit.value]);
+    if (image == null) {
+      return Stack(
+        children: [
+          ImagePickerWidget(
+            onTap: (file) {
+              bytes.value = file?.bytes;
+              platformFile.value = file;
+            },
+            child: Container(
+              width: isLimited ? 150 : null,
+              height: isLimited ? 150 : null,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: PRIMARY,
+                ),
+                color: BACKGROUND_CONTENT,
+                image: bytes.value == null
+                    ? null
+                    : DecorationImage(
+                        image: (MemoryImage(bytes.value!) as ImageProvider),
+                      ),
+              ),
+              child: bytes.value == null
+                  ? Center(
+                      child: Icon(
+                        Icons.add,
+                        color: Colors.white,
+                      ),
+                    )
+                  : null,
+            ),
+          ),
+          if (isEdit.value)
+            Align(
+              alignment: Alignment(0.95, -0.95),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      if (platformFile.value == null) {
+                        showToast(context, "Gambar Sponsor Tidak Boleh Kosong");
+                        return;
+                      }
+                      ref
+                          .read(sponsorProvider.notifier)
+                          .insertSponsor(file: platformFile.value!);
+                    },
+                    child: Container(
+                      width: 65,
+                      height: 20,
+                      decoration: BoxDecoration(
+                        color: NAVBAR,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: Center(child: Text("Save")),
+                    ),
+                  ),
+                ],
+              ),
+            )
+        ],
+      );
+    }
+    if (!editActive.value) {
+      return Stack(
+        children: [
+          Container(
+            width: isLimited ? 150 : null,
+            height: isLimited ? 150 : null,
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: PRIMARY,
+              ),
+              color: Colors.white,
+              image: DecorationImage(
+                image: (bytes.value == null
+                    ? NetworkImage("${ApiUrl.storage}/$image")
+                    : MemoryImage(bytes.value!) as ImageProvider),
+              ),
+            ),
+          ),
+          if (isEdit.value)
+
+          
+            Align(
+              alignment: Alignment(0.95, -0.95),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      editActive.value = true;
+                    },
+                    child: Container(
+                      width: 65,
+                      height: 20,
+                      decoration: BoxDecoration(
+                        color: NAVBAR,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: Center(child: Text("Edit")),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      ref
+                          .read(sponsorProvider.notifier)
+                          .deleteSponsor(id: id ?? "", auth: user.value ?? "");
+                    },
+                    child: Container(
+                        width: 65,
+                        height: 20,
+                        decoration: BoxDecoration(
+                          color: NAVBAR,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Center(child: Text("Hapus"))),
+                  ),
+                ],
+              ),
+            )
+        ],
+      );
+    }
+    return Stack(
+      children: [
+        ImagePickerWidget(
+          onTap: (file) {
+            bytes.value = file?.bytes;
+            platformFile.value = file;
+          },
+          child: Container(
+            width: isLimited ? 150 : null,
+            height: isLimited ? 150 : null,
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: PRIMARY,
+              ),
+              color: Colors.white,
+              image: DecorationImage(
+                image: (bytes.value == null
+                    ? NetworkImage("${ApiUrl.storage}/$image")
+                    : MemoryImage(bytes.value!) as ImageProvider),
+              ),
+            ),
+          ),
+        ),
+        if (isEdit.value)
+          Align(
+            alignment: Alignment(0.95, -0.95),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                InkWell(
+                  onTap: () {
+                    if (platformFile.value == null) {
+                      showToast(context, "Gambar Tidak Boleh Kosong");
+                    }
+                    ref.read(sponsorProvider.notifier).editSponsor(
+                        id: id ?? "", nama: "nama", file: platformFile.value!);
+                    editActive.value = false;
+                  },
+                  child: Container(
+                    width: 65,
+                    height: 20,
+                    decoration: BoxDecoration(
+                      color: NAVBAR,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Center(child: Text("Save")),
+                  ),
+                ),
+              ],
+            ),
+          )
+      ],
     );
   }
 }
@@ -536,15 +780,19 @@ class _FooterItem extends StatelessWidget {
   }
 }
 
-class _TitleFooter extends StatelessWidget {
+class _TitleFooter extends ConsumerWidget {
+  final VoidCallback? onTap;
+
   final String text;
   const _TitleFooter({
     Key? key,
     required this.text,
+    this.onTap,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
+    final user = ref.watch(authProvider).value;
     final isActionEnabled = MediaQuery.of(context).size.width > 800;
     return Container(
       padding: EdgeInsets.only(
@@ -559,12 +807,30 @@ class _TitleFooter extends StatelessWidget {
           ),
         ),
       ),
-      child: Text(
-        text,
-        style: TextStyle(
-          fontSize: !isActionEnabled ? 15 : 20,
-        ),
-      ),
+      child: onTap != null && user != null
+          ? Row(
+              children: [
+                Text(
+                  text,
+                  style: TextStyle(
+                    fontSize: !isActionEnabled ? 15 : 20,
+                  ),
+                ),
+                if (onTap != null && user != null)
+                  IconButton(
+                      onPressed: onTap,
+                      icon: Icon(
+                        Icons.edit,
+                        color: Colors.white,
+                      ))
+              ],
+            )
+          : Text(
+              text,
+              style: TextStyle(
+                fontSize: !isActionEnabled ? 15 : 20,
+              ),
+            ),
     );
   }
 }
